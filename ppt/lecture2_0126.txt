@@ -1,0 +1,2655 @@
+[Ziyun (Claude) Wang] 08:33:05
+And, uh, I'll try to…
+
+[Ziyun (Claude) Wang] 08:33:05
+Um, I guess, yeah, I'll get this recorded, and later, if you have any questions, you can revisit the lecture.
+
+[Ziyun (Claude) Wang] 08:33:08
+posted this lecture on Canvas.
+
+[Ziyun (Claude) Wang] 08:33:10
+So, um, just some quick announcements. So, first one is…
+
+[Ziyun (Claude) Wang] 08:33:16
+Uh, you saw that I
+
+[Ziyun (Claude) Wang] 08:33:18
+Slice for the last lecture.
+
+[Ziyun (Claude) Wang] 08:33:20
+did you guess ? Did everyone get that lecture size? The in the Pdf format.
+
+[Ziyun (Claude) Wang] 08:33:30
+Yes, okay. Great. So.
+
+[Ziyun (Claude) Wang] 08:33:33
+This is, this is how it will go throughout the semester. I.
+
+[Ziyun (Claude) Wang] 08:33:39
+On canv,
+
+[Ziyun (Claude) Wang] 08:33:41
+so all the files related to the course.
+
+[Ziyun (Claude) Wang] 08:33:44
+And, uh, the current version on Canvas is probably not the final version for the size, because I've been trying to revise the size and
+
+[Ziyun (Claude) Wang] 08:33:53
+as I go through them, I find mistakes, and I make updates, so be sure, if you want to use it as a reference,
+
+[Ziyun (Claude) Wang] 08:33:59
+download the latest version. Uh, sometimes when I upload the lecture, there will be a notification, but I'm not sure exactly how that works.
+
+[Ziyun (Claude) Wang] 08:34:05
+So please, when you look at them, make sure they are the latest version.
+
+[Ziyun (Claude) Wang] 08:34:11
+Um, so, uh, that's… that's pretty much it for the, uh, announcement. I think we
+
+[Ziyun (Claude) Wang] 08:34:17
+start office hours this, uh, week.
+
+[Ziyun (Claude) Wang] 08:34:20
+Uh, although on Wednesday, uh, as I said in the announcement, there won't be instructor office hours on Wednesday.
+
+[Ziyun (Claude) Wang] 08:34:27
+So, uh, that's… that's all the announcements for today, let's, uh, get started, uh, with the technical part.
+
+[Ziyun (Claude) Wang] 08:34:34
+So, um, I think last time we talked about, uh, 3D rotations, right?
+
+[Ziyun (Claude) Wang] 08:34:40
+So, we're on this slide, where we define the right-hand rule, the right-hand convention,
+
+[Ziyun (Claude) Wang] 08:34:46
+For 3D rotations. So, into this lecture, I will try to get through the rotation part as quickly as possible.
+
+[Ziyun (Claude) Wang] 08:34:54
+Because, uh, this week, we want to dive into the details of
+
+[Ziyun (Claude) Wang] 08:34:59
+image and cameras,
+
+[Ziyun (Claude) Wang] 08:35:01
+Uh, so how do we form images, uh, using cameras? How do we capture? How do we project points from
+
+[Ziyun (Claude) Wang] 08:35:07
+3D to 2D, which is important for 3D computer vision.
+
+[Ziyun (Claude) Wang] 08:35:11
+Um, but we still have some work before we can, uh, you know, go into that.
+
+[Ziyun (Claude) Wang] 08:35:15
+Uh, we want to look at different ways we can represent
+
+[Ziyun (Claude) Wang] 08:35:19
+rotations. Uh, so here, uh, let's just quickly recap, right? We can have…
+
+[Ziyun (Claude) Wang] 08:35:25
+3D rotations in this format, which is this 3x3 matrix,
+
+[Ziyun (Claude) Wang] 08:35:30
+And this is called the rotation matrix.
+
+[Ziyun (Claude) Wang] 08:35:32
+And a rotation matrix, uh, can actually rotate a vector in the 3D space.
+
+[Ziyun (Claude) Wang] 08:35:38
+into a new vector. And, uh, there are three…
+
+[Ziyun (Claude) Wang] 08:35:43
+Uh, general, uh, restriction matrices that you can see here, these are usually used for, uh, a, uh,
+
+[Ziyun (Claude) Wang] 08:35:49
+Rotation parameterization called OIDR representation.
+
+[Ziyun (Claude) Wang] 08:35:52
+Which we'll talk about later. So, for example, here, uh, this first rotation matrix, this represents a 3D rotation.
+
+[Ziyun (Claude) Wang] 08:36:00
+Around the x-axis.
+
+[Ziyun (Claude) Wang] 08:36:02
+by theta degrees, right? And this is very easy to remember, right? Because you have a 1 here,
+
+[Ziyun (Claude) Wang] 08:36:08
+So basically, at 1.1, you have A1,
+
+[Ziyun (Claude) Wang] 08:36:12
+Right? This is how you know this is a rotation around X.
+
+[Ziyun (Claude) Wang] 08:36:16
+Right? And similarly, for the second rotation,
+
+[Ziyun (Claude) Wang] 08:36:20
+You have 2-2,
+
+[Ziyun (Claude) Wang] 08:36:22
+Uh, to have one, which means this is a rotation around Y, and you have Z,
+
+[Ziyun (Claude) Wang] 08:36:27
+Uh, which has a 1 at a 3-3. I know this is a, uh, rotation around C.
+
+[Ziyun (Claude) Wang] 08:36:34
+Alright, this is quite convenient. We can represent the 3D rotation with a 3x3 matrix.
+
+[Ziyun (Claude) Wang] 08:36:40
+And, uh, if we…
+
+[Ziyun (Claude) Wang] 08:36:42
+Proceed. Uh, we talk about how do we know if a rotation is proper, right?
+
+[Ziyun (Claude) Wang] 08:36:47
+Uh, so the way is we can actually take the pot, uh, the way to check this is we can take the dot products between, uh, the columns of the rotation matrix. It should have
+
+[Ziyun (Claude) Wang] 08:36:58
+Uh, a dot product of 0,
+
+[Ziyun (Claude) Wang] 08:37:00
+And, uh, between each column and itself,
+
+[Ziyun (Claude) Wang] 08:37:04
+Uh, you should project to 1, uh, which has a unit length, which means this is orthonormal. And, uh, equivalently, this is also R transpose R equals, uh, identity.
+
+[Ziyun (Claude) Wang] 08:37:16
+And this is how we know this is a proper rotation matrix.
+
+[Ziyun (Claude) Wang] 08:37:20
+And if we have a determinant of
+
+[Ziyun (Claude) Wang] 08:37:22
+Positive one, uh, so that means that a, uh, right-handed, uh, so that, that means you actually rotate,
+
+[Ziyun (Claude) Wang] 08:37:29
+a, uh, a vector.
+
+[Ziyun (Claude) Wang] 08:37:31
+Uh, from a right-handed space, uh, right-handed, uh, convention to a right-handed convention, but then if you have a determinant of negative 1, that means you also flip.
+
+[Ziyun (Claude) Wang] 08:37:40
+Which means you go from right-handed to left-handed,
+
+[Ziyun (Claude) Wang] 08:37:44
+Um, and vice versa.
+
+[Ziyun (Claude) Wang] 08:37:47
+So, rotations form a group that has all these properties, uh, closure, sensitivity, uh, identity inverse.
+
+[Ziyun (Claude) Wang] 08:37:55
+And 2D rotations, they form a group called SO2, and 3D rotations, we have a group called SO3.
+
+[Ziyun (Claude) Wang] 08:38:02
+Right. And, uh, the order of applying these rotations actually matter, right here. R1 times R2 is actually different from R2 times R1,
+
+[Ziyun (Claude) Wang] 08:38:11
+And we'll talk about the order that we apply these rotations later.
+
+[Ziyun (Claude) Wang] 08:38:17
+And, uh, these are some common groups.
+
+[Ziyun (Claude) Wang] 08:38:19
+Uh, I think last time we were at…
+
+[Ziyun (Claude) Wang] 08:38:23
+Um…
+
+[Ziyun (Claude) Wang] 08:38:26
+I guess… here, right? So, we can actually combine rotation and translation into something
+
+[Ziyun (Claude) Wang] 08:38:32
+A little bit more general, uh, it's called SE3.
+
+[Ziyun (Claude) Wang] 08:38:35
+So this is a group that contains all the transformations that
+
+[Ziyun (Claude) Wang] 08:38:38
+Um, that, um, are composed of a rotation and a translation.
+
+[Ziyun (Claude) Wang] 08:38:44
+So, this actually corresponds to a rigid transformation. What that means is if we have a…
+
+[Ziyun (Claude) Wang] 08:38:51
+Uh, as they are rigid body, or a point,
+
+[Ziyun (Claude) Wang] 08:38:53
+Um, in space, we can actually
+
+[Ziyun (Claude) Wang] 08:38:57
+map that, uh, regist… we can actually rotate and translate that rigid body into
+
+[Ziyun (Claude) Wang] 08:39:02
+a new configuration, and we call that transformation a SE3 transformation.
+
+[Ziyun (Claude) Wang] 08:39:08
+So, uh, this is the form.
+
+[Ziyun (Claude) Wang] 08:39:11
+of a SE3 transformation, right? If we write a point as this homogeneous form, so which means this a point,
+
+[Ziyun (Claude) Wang] 08:39:18
+plus a 1 at the bottom, we can actually…
+
+[Ziyun (Claude) Wang] 08:39:22
+transform that point using this 4x4 matrix.
+
+[Ziyun (Claude) Wang] 08:39:25
+And this 4x4 matrix has a 3x3 on the top left, and then on the right, we have a translation.
+
+[Ziyun (Claude) Wang] 08:39:31
+And then we have a vector of 0,
+
+[Ziyun (Claude) Wang] 08:39:34
+Uh, which is 1x3, and then we have a, uh, a 1 at the bottom right. So this whole matrix is 4x4,
+
+[Ziyun (Claude) Wang] 08:39:42
+So, uh, in this case, you can actually pretty conveniently, uh, translate, rotate and translate a point,
+
+[Ziyun (Claude) Wang] 08:39:49
+by this simple, uh, linear transformation. So we multiply T by P, the homogeneous P,
+
+[Ziyun (Claude) Wang] 08:39:57
+And then this represents that transform.
+
+[Ziyun (Claude) Wang] 08:40:00
+So, this is the idea of a homogeneous transformation, so instead of
+
+[Ziyun (Claude) Wang] 08:40:05
+Having two steps, so first rotate and translate.
+
+[Ziyun (Claude) Wang] 08:40:09
+we actually have a single step,
+
+[Ziyun (Claude) Wang] 08:40:11
+A 4x4 matrix, T,
+
+[Ziyun (Claude) Wang] 08:40:13
+as a rigid transform.
+
+[Ziyun (Claude) Wang] 08:40:15
+So, this makes composition actually a lot easier. For example, here, uh, if we want to get the transform between A and C,
+
+[Ziyun (Claude) Wang] 08:40:24
+we can actually compose the transform between B to C, and the transform between A to B, and multiply them together, right? I mentioned this canceling rule,
+
+[Ziyun (Claude) Wang] 08:40:33
+Which means if you multiply these two together, you can cancel from the bottom left.
+
+[Ziyun (Claude) Wang] 08:40:37
+to the top right, right? You can cancel out the B, and it becomes, uh…
+
+[Ziyun (Claude) Wang] 08:40:42
+A to C, right? This is how you read this. You can actually apply this to a chain of transformations, right? It will introduce something called a D, we can do C to D, D to B,
+
+[Ziyun (Claude) Wang] 08:40:52
+Right? B2A, and then you multiply them together, it becomes A to C, right?
+
+[Ziyun (Claude) Wang] 08:40:58
+So, uh, this is the rule of composing, uh, these transformations through multiplication.
+
+[Ziyun (Claude) Wang] 08:41:05
+So, OpenCV actually has a very well-defined camera pose convention.
+
+[Ziyun (Claude) Wang] 08:41:11
+What that means is, if we're looking at a post matrix, a 4x4,
+
+[Ziyun (Claude) Wang] 08:41:15
+What does that mean exactly, right? You can mean, uh, the transformation between
+
+[Ziyun (Claude) Wang] 08:41:20
+Um, between the camera frame to the world frame,
+
+[Ziyun (Claude) Wang] 08:41:24
+But you could also be, uh, the opposite.
+
+[Ziyun (Claude) Wang] 08:41:27
+So, in this case, if we look at, uh, the…
+
+[Ziyun (Claude) Wang] 08:41:30
+provision of OpenCV, uh, if you read a 4x4 matrix, this is what it means, right?
+
+[Ziyun (Claude) Wang] 08:41:38
+TC on top, and W on the bottom.
+
+[Ziyun (Claude) Wang] 08:41:40
+What that means is, if you have a point in the world frame, you can actually transform that point
+
+[Ziyun (Claude) Wang] 08:41:45
+from world to camera, right? Sometimes this is called a world-to-camera transform.
+
+[Ziyun (Claude) Wang] 08:41:51
+And, uh, this is… so this XC bar, this is a homogeneous plane.
+
+[Ziyun (Claude) Wang] 08:41:57
+In the camera space,
+
+[Ziyun (Claude) Wang] 08:41:58
+And in the camera coordinate system, and this X-bar W, this is a point,
+
+[Ziyun (Claude) Wang] 08:42:04
+Uh, represented by a homogeneous coordinate,
+
+[Ziyun (Claude) Wang] 08:42:07
+in the world coordinate system, right?
+
+[Ziyun (Claude) Wang] 08:42:10
+And, uh, the transform looks like this.
+
+[Ziyun (Claude) Wang] 08:42:13
+So it has rotation, W2C, and the translation, W to C,
+
+[Ziyun (Claude) Wang] 08:42:18
+And they have a vector of zeros and a 1. This is 4x4.
+
+[Ziyun (Claude) Wang] 08:42:22
+And actually, you can easily invert it,
+
+[Ziyun (Claude) Wang] 08:42:25
+By, uh, doing this, right? You can invert the C to W,
+
+[Ziyun (Claude) Wang] 08:42:29
+Uh, by taking… so I… you can invert the, uh, W2C,
+
+[Ziyun (Claude) Wang] 08:42:33
+Uh, but taking the inverse of C to W,
+
+[Ziyun (Claude) Wang] 08:42:36
+Um, and, uh, basically what you end up with is this, right? This is something you can memorize.
+
+[Ziyun (Claude) Wang] 08:42:42
+Uh, is that if we actually invert a transformation,
+
+[Ziyun (Claude) Wang] 08:42:46
+The rotation actually becomes the transpose,
+
+[Ziyun (Claude) Wang] 08:42:49
+Uh, so the inverse of rotation matrix also is transpose, right? So it becomes its transpose,
+
+[Ziyun (Claude) Wang] 08:42:55
+Uh, uh, which is the transpose of W to C, and the translation is negative
+
+[Ziyun (Claude) Wang] 08:43:01
+Uh, the transpose of the original rotation,
+
+[Ziyun (Claude) Wang] 08:43:03
+multiplied by T of the… this is the original translation.
+
+[Ziyun (Claude) Wang] 08:43:09
+So this is something you can memorize.
+
+[Ziyun (Claude) Wang] 08:43:12
+Daryl, you have a question?
+
+[Jarrod C] 08:43:14
+Uh, yes, Professor, uh, can you, uh… so this 2x2 matrix…
+
+[Jarrod C] 08:43:20
+Uh, that you're calling your 4x4 matrix,
+
+[Jarrod C] 08:43:24
+Uh, can you, um…
+
+[Jarrod C] 08:43:25
+I mean, I kind of have an idea of why you're saying that, but can you provide a little more explicit details on how that becomes a 4x… it's a 2x2 matrix, but as you just call it, you've been calling it, like, a 4x4 matrix. Can you demonstrate more explicitly
+
+[Ziyun (Claude) Wang] 08:43:38
+I see.
+
+[Jarrod C] 08:43:39
+Uh, that concept.
+
+[Ziyun (Claude) Wang] 08:43:41
+Okay, yeah, that's a… that's a very good question. I'm writing it as this 2x2, but you can actually expand it out.
+
+[Ziyun (Claude) Wang] 08:43:47
+Uh, let me… let me try to write something here.
+
+[Ziyun (Claude) Wang] 08:43:50
+Um, so here, right, you're talking about…
+
+[Ziyun (Claude) Wang] 08:43:53
+this, right? This is…
+
+[Ziyun (Claude) Wang] 08:43:56
+3 by 3.
+
+[Ziyun (Claude) Wang] 08:43:58
+Right? So although it raised, like, so it looks like it's, like, a 1x1, it's a single entry,
+
+[Ziyun (Claude) Wang] 08:44:05
+But in reality, this is actually a 3x3 matrix. Imagine that you have a 3 by 3 matrix on
+
+[Ziyun (Claude) Wang] 08:44:11
+The top left, and then this T-vector,
+
+[Ziyun (Claude) Wang] 08:44:14
+is 3x1, right? This is 3x1…
+
+[Ziyun (Claude) Wang] 08:44:18
+Right? This is 3x1.
+
+[Ziyun (Claude) Wang] 08:44:20
+And then you combine all these entries together actually becomes
+
+[Ziyun (Claude) Wang] 08:44:24
+Uh, so… 3… 3…
+
+[Ziyun (Claude) Wang] 08:44:28
+rows here for R, and one row for the 0 and 1.
+
+[Ziyun (Claude) Wang] 08:44:31
+Right? So it becomes four columns, uh, 4 rows, and then similarly, for columns, you have
+
+[Ziyun (Claude) Wang] 08:44:37
+three columns for the R, and one column for the T.
+
+[Ziyun (Claude) Wang] 08:44:41
+Uh, and this one, right? So it's actually 4x4.
+
+[Ziyun (Claude) Wang] 08:44:44
+Alright, although it writes like this, it's for our convenience, right? We can actually, uh, you know, know the physical meaning, or the geometric meaning of this R,
+
+[Ziyun (Claude) Wang] 08:44:55
+and tea, but I actually write, like, a 3x3 matrix, uh, in the actual matrix, right? So, um, that, that explains why this T…
+
+[Ziyun (Claude) Wang] 08:45:04
+W2C is actually 4x4.
+
+[Ziyun (Claude) Wang] 08:45:07
+Does that answer your question, Jared?
+
+[Jarrod C] 08:45:09
+Um, a little bit, the column 4 is what all zeros? Is that… is that what you were saying?
+
+[Ziyun (Claude) Wang] 08:45:18
+Uh, this one, so you have three zeros and a 1.
+
+[Jarrod C] 08:45:19
+to make it
+
+[Ziyun (Claude) Wang] 08:45:22
+So, it's… has four values, so 3 zeros and a 1, uh, at the end.
+
+[Jarrod C] 08:45:22
+Okay.
+
+[Jarrod C] 08:45:27
+Okay.
+
+[Ziyun (Claude) Wang] 08:45:28
+Yeah. Okay, that's a very good question.
+
+[Ziyun (Claude) Wang] 08:45:32
+So, uh, this is invertible, so you know every rigid transformation is invertible, right? Basically, you can…
+
+[Ziyun (Claude) Wang] 08:45:39
+rotate and translate something to another configuration, and you can rotate and translate it back, right? This is… this really fits our intuition about the 3D world.
+
+[Ziyun (Claude) Wang] 08:45:48
+So, uh, next… let me stop this annotation.
+
+[Ziyun (Claude) Wang] 08:45:58
+I guess I need to clear this.
+
+[Ziyun (Claude) Wang] 08:46:04
+Right. So, we know transformations, right? We can actually apply transformations, uh, sequentially.
+
+[Ziyun (Claude) Wang] 08:46:11
+But if we want to transform something, right, how do we know
+
+[Ziyun (Claude) Wang] 08:46:16
+Um, how do we… how do we know what coordinate system is that transformation represented in? Like, for example,
+
+[Ziyun (Claude) Wang] 08:46:24
+We want to rotate a object, right? And we take a second rotation, right? That second rotation can be defined with respect to the current configuration of the object.
+
+[Ziyun (Claude) Wang] 08:46:35
+Or, you can be represented with respect to the world, right?
+
+[Ziyun (Claude) Wang] 08:46:40
+For example, if we take two rotations, right, the first rotation will rotate the object into some configuration,
+
+[Ziyun (Claude) Wang] 08:46:46
+And the second rotation can be defined with either
+
+[Ziyun (Claude) Wang] 08:46:49
+the original, like, the world that we started with, or the current configuration of the object, which is the rotated
+
+[Ziyun (Claude) Wang] 08:46:56
+version of the original coordinate system, right? So, transformation actually comes in very specific orders, right? It can be also… it can be either a pre-multiplication,
+
+[Ziyun (Claude) Wang] 08:47:07
+Or impose multiplication, uh, depending on where the change transform is defined, right? Let's look at a concrete example of this.
+
+[Ziyun (Claude) Wang] 08:47:15
+Right? Um…
+
+[Ziyun (Claude) Wang] 08:47:19
+Oh, sorry, let me click this…
+
+[Ziyun (Claude) Wang] 08:47:23
+So, here, for example, this is what I mean by, uh,
+
+[Ziyun (Claude) Wang] 08:47:28
+original and rotated, right? Originally,
+
+[Ziyun (Claude) Wang] 08:47:30
+We have this world, right, defined by…
+
+[Ziyun (Claude) Wang] 08:47:33
+Um, this YW and XW, two axes of this coordinate system, right? And, uh, the origin is at W.
+
+[Ziyun (Claude) Wang] 08:47:41
+And originally, we have, uh, some coordinates, uh, some object that we want to rotate.
+
+[Ziyun (Claude) Wang] 08:47:47
+and translate, right? So, up to the first step, it becomes this.
+
+[Ziyun (Claude) Wang] 08:47:53
+Uh, this…
+
+[Ziyun (Claude) Wang] 08:47:54
+This frame is defined by
+
+[Ziyun (Claude) Wang] 08:47:57
+Uh, rotating and translating the original frame.
+
+[Ziyun (Claude) Wang] 08:48:01
+Uh, by some region transformation, right? And it is defined by this YB and XB.
+
+[Ziyun (Claude) Wang] 08:48:06
+And the origin is at B, right? And then, next time, we want to apply another
+
+[Ziyun (Claude) Wang] 08:48:13
+transformation to go from
+
+[Ziyun (Claude) Wang] 08:48:14
+This frame to a new frame, which we call a be new, right? This new frame.
+
+[Ziyun (Claude) Wang] 08:48:20
+And we want to decide whether this transformation, this new transformation, is represented
+
+[Ziyun (Claude) Wang] 08:48:27
+In the original, uh…
+
+[Ziyun (Claude) Wang] 08:48:30
+world coordinated system, or the new coordinate system, which is this B.
+
+[Ziyun (Claude) Wang] 08:48:36
+Right? So in 2D rotation,
+
+[Ziyun (Claude) Wang] 08:48:38
+Uh, this is actually trivial, right? Because when we rotate in this particular world,
+
+[Ziyun (Claude) Wang] 08:48:43
+Uh, the rotation is actually the same, right?
+
+[Ziyun (Claude) Wang] 08:48:45
+But what's different is actually this translation, right, from B to B new, it actually has a very different
+
+[Ziyun (Claude) Wang] 08:48:51
+Um, numerical value, right? Uh, if it's represented in the world,
+
+[Ziyun (Claude) Wang] 08:48:56
+Or, in this new, uh, in this current configuration, which is B.
+
+[Ziyun (Claude) Wang] 08:49:00
+Right? So, for example, this B2B new, uh, in the world, uh, it's just this, right? In the work-related system, right? And, uh, but if we…
+
+[Ziyun (Claude) Wang] 08:49:11
+represented in this…
+
+[Ziyun (Claude) Wang] 08:49:13
+Current configuration actually becomes this vector represented, uh, in this YB and XB, right, which is different. So, actually, we have two ways to represent this, right? The first way
+
+[Ziyun (Claude) Wang] 08:49:23
+is this delta W.
+
+[Ziyun (Claude) Wang] 08:49:26
+That means the transformation expressed in the world frame
+
+[Ziyun (Claude) Wang] 08:49:30
+And the second is this pink value, this is delta B. This is the same transformation expressed
+
+[Ziyun (Claude) Wang] 08:49:36
+in the brief. So if you write out the transformation matrix, these two actually look very different, right? We'll look at
+
+[Ziyun (Claude) Wang] 08:49:42
+what these look like in the next few slides, but what this means is the same transformation can have very different forms if they are represented in different frames.
+
+[Ziyun (Claude) Wang] 08:49:53
+So, uh, let's look at, uh, this is the same example, right?
+
+[Ziyun (Claude) Wang] 08:49:58
+Um, on the left, we have something called a world increment, right? Uh, this is when the transformation is expressed in world.
+
+[Ziyun (Claude) Wang] 08:50:05
+And we actually pre-multiply
+
+[Ziyun (Claude) Wang] 08:50:08
+Um, the original transformation that takes a point, uh, from
+
+[Ziyun (Claude) Wang] 08:50:13
+Uh, B to the world.
+
+[Ziyun (Claude) Wang] 08:50:16
+Uh, by this world increment. So when we…
+
+[Ziyun (Claude) Wang] 08:50:20
+represented in a world, we pre-multiply.
+
+[Ziyun (Claude) Wang] 08:50:22
+Right? So we put the delta W in front of the B2W,
+
+[Ziyun (Claude) Wang] 08:50:28
+And, uh, in contrast, if we move to the right,
+
+[Ziyun (Claude) Wang] 08:50:32
+Uh, if this delta B is represented in this transformation is represented in the body frame, right, B stands for body,
+
+[Ziyun (Claude) Wang] 08:50:40
+So this is the current frame.
+
+[Ziyun (Claude) Wang] 08:50:42
+Which is this YBXV.
+
+[Ziyun (Claude) Wang] 08:50:44
+If we have this transform represented in the body frame, we actually post-multiply it.
+
+[Ziyun (Claude) Wang] 08:50:49
+Right? So, essentially, we have two ways to do this. If the transform…
+
+[Ziyun (Claude) Wang] 08:50:55
+is represented in World,
+
+[Ziyun (Claude) Wang] 08:50:56
+we call it a fixed frame, right, because it doesn't change
+
+[Ziyun (Claude) Wang] 08:51:00
+With respect to the current configuration, right? So, this, we do…
+
+[Ziyun (Claude) Wang] 08:51:04
+pre-multiplication. And if we are dealing with a changing frame,
+
+[Ziyun (Claude) Wang] 08:51:09
+We actually do a post-multiplication.
+
+[Ziyun (Claude) Wang] 08:51:12
+Right, so the order of applying these transforms is actually different.
+
+[Ziyun (Claude) Wang] 08:51:15
+for these two representations.
+
+[Ziyun (Claude) Wang] 08:51:18
+So, um…
+
+[Ziyun (Claude) Wang] 08:51:20
+With that, we can actually chain multiple transforms together, right? Um, so…
+
+[Ziyun (Claude) Wang] 08:51:26
+We talk about this in one example in the previous slides, that we can actually transform a point P
+
+[Ziyun (Claude) Wang] 08:51:33
+PY, through this rigid transform to PX.
+
+[Ziyun (Claude) Wang] 08:51:37
+And, uh, most, uh, I guess, uh, most generally,
+
+[Ziyun (Claude) Wang] 08:51:42
+And, uh, practically, what we end up with is multiple frames, right? Sometimes we have a transform,
+
+[Ziyun (Claude) Wang] 08:51:49
+between, uh, a cornea frame A to world,
+
+[Ziyun (Claude) Wang] 08:51:53
+And, uh, C to A…
+
+[Ziyun (Claude) Wang] 08:51:55
+And then we have a point in C, right? Uh, one example would be if we have a world coordinate system, and we have an A, which represents the body frame of a robot,
+
+[Ziyun (Claude) Wang] 08:52:06
+And we also have a C,
+
+[Ziyun (Claude) Wang] 08:52:08
+Uh, which represents the camera frame, because the camera frame can have a different, uh,
+
+[Ziyun (Claude) Wang] 08:52:14
+configuration than the body frame, we can actually chain these together, uh, to get a point from
+
+[Ziyun (Claude) Wang] 08:52:19
+From the camera… from the camera frame to world.
+
+[Ziyun (Claude) Wang] 08:52:22
+This is very, uh… this is very common in that sometimes we estimate the location of a point in the camera frame,
+
+[Ziyun (Claude) Wang] 08:52:30
+And we want to convert it to a global world frame,
+
+[Ziyun (Claude) Wang] 08:52:33
+Uh, through the camera pose.
+
+[Ziyun (Claude) Wang] 08:52:35
+So that we have all the points in the common coordinate system, which is world.
+
+[Ziyun (Claude) Wang] 08:52:40
+Now, imagine that we have many different cameras, and these cameras move around in the 3D world, and for each of them, we can reconstruct a point in a camera coordinate system.
+
+[Ziyun (Claude) Wang] 08:52:50
+And we want to convert all of them
+
+[Ziyun (Claude) Wang] 08:52:52
+into a common coordinate system, which is world.
+
+[Ziyun (Claude) Wang] 08:52:55
+Right? And when you do this, you actually need to consider sort of the orders of applying these transforms and, you know, the superscripts and the subscripts of these logic transformations.
+
+[Ziyun (Claude) Wang] 08:53:06
+So that they'd cancel out, uh…
+
+[Ziyun (Claude) Wang] 08:53:08
+properly, like, for example, here, we are… we cancel, uh, this A and this A to get T,
+
+[Ziyun (Claude) Wang] 08:53:15
+Uh, for, uh, this transform from C to W, right?
+
+[Ziyun (Claude) Wang] 08:53:19
+And, uh, this is also common for something called a forward, uh, forward kinematics in robotics.
+
+[Ziyun (Claude) Wang] 08:53:25
+So, uh, in this example, uh, we have a robot arm,
+
+[Ziyun (Claude) Wang] 08:53:29
+And we have many rotation and translations, uh, between
+
+[Ziyun (Claude) Wang] 08:53:34
+The, uh, the drawings of the arm, right? We start with the base,
+
+[Ziyun (Claude) Wang] 08:53:37
+Right? And then we have a rotational drawings here, we have a rotational drawings here, all the way to the end effector.
+
+[Ziyun (Claude) Wang] 08:53:44
+And the question is, if we want to get a transform,
+
+[Ziyun (Claude) Wang] 08:53:48
+given the current angles of all the drawings,
+
+[Ziyun (Claude) Wang] 08:53:50
+from, uh, sort of from the base to the end effector, which is the tip of the robot arm.
+
+[Ziyun (Claude) Wang] 08:53:56
+of the robot hand gripper. Uh, how do we do that, right? So, the way we do that is usually through a chain of transformation, right? In this case,
+
+[Ziyun (Claude) Wang] 08:54:06
+It's usually post-multiplication.
+
+[Ziyun (Claude) Wang] 08:54:08
+Because we are always dealing with the transformation between adjacent joints, right? So, from the base,
+
+[Ziyun (Claude) Wang] 08:54:16
+To this right, we have one transformation, uh, SC3, and then we have another
+
+[Ziyun (Claude) Wang] 08:54:21
+Uh, transformation between this and this, uh, and this… the first strike and the second drive.
+
+[Ziyun (Claude) Wang] 08:54:26
+And when we apply all these together, we're always
+
+[Ziyun (Claude) Wang] 08:54:30
+Uh, transforming with respect to a moving frame.
+
+[Ziyun (Claude) Wang] 08:54:34
+Right? So this is what the post-multiplication comes in.
+
+[Ziyun (Claude) Wang] 08:54:40
+And let me see if there's, uh… I see a question in chat.
+
+[Ziyun (Claude) Wang] 08:54:44
+Uh, triplets
+
+[Ziyun (Claude) Wang] 08:54:46
+University of the improvement education.
+
+[Ziyun (Claude) Wang] 08:54:48
+Uh, put it here.
+
+[Ziyun (Claude) Wang] 08:54:50
+Yeah, so, yeah, for rotations, uh, that's true. So, general… so for humorous skin events, okay, yeah, so humorous kinematics is a different problem. There's a lot more…
+
+[Ziyun (Claude) Wang] 08:55:00
+complicated. So, inverse kinematics, which… that means if you know the position of a point,
+
+[Ziyun (Claude) Wang] 08:55:05
+on your end date vector, how do you back up? How do you back out the theta values in this particular configuration, right? That's called immerse kmaking. It's not really the inverse of all the
+
+[Ziyun (Claude) Wang] 08:55:16
+rotations, because you don't have access to all these rotations, right? Inverse kinematics means a different thing.
+
+[Ziyun (Claude) Wang] 08:55:23
+Um, so now we've talked about…
+
+[Ziyun (Claude) Wang] 08:55:26
+rotations, right? So, at this point, we're mainly… we're mainly dealing with rotation matrices, so 3x3 rotation matrices.
+
+[Ziyun (Claude) Wang] 08:55:35
+But it turns out, this is not the only way we can parametize rotations, so I will try to get through this section
+
+[Ziyun (Claude) Wang] 08:55:41
+A little quicker, because this is, uh, technically not the technical details that you need to
+
+[Ziyun (Claude) Wang] 08:55:47
+Uh, no, so this can be sort of a reference if you want… if you encounter some parameterization of the rotation, and you know… you want to know how to convert between
+
+[Ziyun (Claude) Wang] 08:55:58
+Uh, let's say rotation matrices and some other representations, right? So, uh, this can… you can use the slides as, uh, sort of a reference.
+
+[Ziyun (Claude) Wang] 08:56:06
+Uh, but let's do a quick recap, right? We have rotation matrices, these are, uh, also normal matrices, um, and you can…
+
+[Ziyun (Claude) Wang] 08:56:14
+represent a rotation with, uh, 9 values.
+
+[Ziyun (Claude) Wang] 08:56:20
+And we also have other prime transitions, right? We have rotation matrices as 9 values, we have axis angle, quaternion, Euler angles, right? These all have
+
+[Ziyun (Claude) Wang] 08:56:28
+different forms, right? Rotation niches is probably the easiest, uh, to memorize, and also it actually covers all of the rotations.
+
+[Ziyun (Claude) Wang] 08:56:37
+Uh, but some of these other representations, they're a little bit
+
+[Ziyun (Claude) Wang] 08:56:41
+more difficult to understand, but they're more compact, right? You can see, like, XS angle only has
+
+[Ziyun (Claude) Wang] 08:56:46
+three values, a quaternity only has four values, or the angle is a little bit more, um, we'll talk about this. And also, sometimes these value… these representations are better for some purposes.
+
+[Ziyun (Claude) Wang] 08:56:58
+Right, if you want to do, uh, interpolation, quaternity is probably a lot better than the other representations, right?
+
+[Ziyun (Claude) Wang] 08:57:04
+So, let's look at the first one, which is called axis Angle. This is actually very…
+
+[Ziyun (Claude) Wang] 08:57:08
+intuitive, right? For us,
+
+[Ziyun (Claude) Wang] 08:57:11
+Uh, let's say we want to rotate some object, right?
+
+[Ziyun (Claude) Wang] 08:57:14
+We can actually define an axis
+
+[Ziyun (Claude) Wang] 08:57:16
+Uh, which is the axis that the rotation
+
+[Ziyun (Claude) Wang] 08:57:19
+is, uh, around, uh, defined with respect to. This is a vector, uh, so it's a…
+
+[Ziyun (Claude) Wang] 08:57:25
+vector with three values,
+
+[Ziyun (Claude) Wang] 08:57:27
+Uh, in the 3D space, okay? And it has a norm of 1, because it's only a direction, right? It doesn't contain the, uh, the magnitude.
+
+[Ziyun (Claude) Wang] 08:57:35
+And then we also have an angle, right? This is the angle of the rotation. If you define the, uh, the rotation axis, you can actually
+
+[Ziyun (Claude) Wang] 08:57:43
+fully parameterized, and also the angle, we can fully parameterize the rotation by, uh, visualizing a rotation around this axis by, uh, this data angle.
+
+[Ziyun (Claude) Wang] 08:57:54
+And if we multiply,
+
+[Ziyun (Claude) Wang] 08:57:57
+this unit vector, U,
+
+[Ziyun (Claude) Wang] 08:57:59
+by the angle, we get this value, or this… this vector, we call it a rotation vector.
+
+[Ziyun (Claude) Wang] 08:58:05
+Right? Uh, so the rotation vector has both the magnitude and the rotation axis of the
+
+[Ziyun (Claude) Wang] 08:58:11
+of the rotation. And the conversion is actually easy, right? You can take the original rotation vector, divide by this magnitude,
+
+[Ziyun (Claude) Wang] 08:58:19
+Uh, you end up with a sort of orientation.
+
+[Ziyun (Claude) Wang] 08:58:22
+And then the magnitude of the rotation vector, uh, is just the, uh, um, the degree by which you're rotating this vector.
+
+[Ziyun (Claude) Wang] 08:58:29
+Uh, you're rotating by, uh, in this rotation.
+
+[Ziyun (Claude) Wang] 08:58:33
+So, uh, if we picture this, right?
+
+[Ziyun (Claude) Wang] 08:58:36
+Uh, we have this X as U, and then we can rotate this point P,
+
+[Ziyun (Claude) Wang] 08:58:40
+to P prime, and this is axis angle.
+
+[Ziyun (Claude) Wang] 08:58:43
+There's actually a very, very compact only has 3 values, right? The question is, is this param transition unique?
+
+[Ziyun (Claude) Wang] 08:58:49
+Right? Does anyone have a guess? Like, if we define this
+
+[Ziyun (Claude) Wang] 08:58:53
+Uh, if we have rotation,
+
+[Ziyun (Claude) Wang] 08:58:56
+is the, uh, parameterization in this form of a rotation vector unique?
+
+[Ziyun (Claude) Wang] 08:59:02
+Anyone? Does anyone want to take a guess? Is this unique?
+
+[Ziyun (Claude) Wang] 08:59:08
+So it's defined by this…
+
+[Ziyun (Claude) Wang] 08:59:10
+Rotation angle, as well as an axis, right?
+
+[Ziyun (Claude) Wang] 08:59:14
+Yeah, so it's the year has… Nancy is not unique, right? That's correct.
+
+[Ziyun (Claude) Wang] 08:59:18
+And can you, uh, turn on your microphone and tell me why do you think this is not unique?
+
+[Ziyue Zheng] 08:59:24
+Yeah, I think it's, uh, we have a, like, a circle, and then you can add any N plus, uh, 2 pi.
+
+[Ziyue Zheng] 08:59:34
+In this data, so you can get another set.
+
+[Ziyun (Claude) Wang] 08:59:37
+No, we already defined the range of theta, right? So, it's from 0 to pi. So there's no ambiguity there.
+
+[Ziyue Zheng] 08:59:37
+But, so…
+
+[Ziyue Zheng] 08:59:42
+Um… Oh, uh…
+
+[Ziyun (Claude) Wang] 08:59:43
+But think about the direction of your… let's say you rotate the same thing, right?
+
+[Ziyun (Claude) Wang] 08:59:49
+So, you can rotate it around this axis, right, this U-axis,
+
+[Ziyue Zheng] 08:59:50
+Yes. Yeah, edit.
+
+[Ziyun (Claude) Wang] 08:59:54
+But you can also flip it, right? You can flip the U-axis.
+
+[Ziyue Zheng] 08:59:57
+Yeah, it's just like, yes.
+
+[Ziyun (Claude) Wang] 08:59:58
+Yeah, so that's exactly correct.
+
+[Ziyun (Claude) Wang] 09:00:01
+Right, so actually is actually not unique, right? The same rotation can be parameterized by these two
+
+[Ziyun (Claude) Wang] 09:00:08
+different ways, right? The first one is you can, uh, you can rotate around you by theta degrees, but you can also
+
+[Ziyun (Claude) Wang] 09:00:15
+rotate around a negative view by a negative theta degrees.
+
+[Ziyun (Claude) Wang] 09:00:21
+So both prioritization actually produce the same rotation matrix.
+
+[Ziyun (Claude) Wang] 09:00:25
+So, um, let's look at practically how do we convert axis angle to rotation matrices, right? So any rotation can actually be
+
+[Ziyun (Claude) Wang] 09:00:33
+Written as an exponential of a skill symmetric matrix, right? This sounds very complex, but I'll explain part by part, right? The first one is
+
+[Ziyun (Claude) Wang] 09:00:40
+Uh, what is the, uh, sort of the…
+
+[Ziyun (Claude) Wang] 09:00:43
+Uh, skill-symmetric matrix, right?
+
+[Ziyun (Claude) Wang] 09:00:45
+Um, I hope I have a cure. Uh, so yeah, so basically, if we have this, uh, rotation vector,
+
+[Ziyun (Claude) Wang] 09:00:51
+We can actually, uh, represent
+
+[Ziyun (Claude) Wang] 09:00:54
+Uh, it's skill-symmetric Matrix,
+
+[Ziyun (Claude) Wang] 09:00:57
+by writing out a matrix that looks like this.
+
+[Ziyun (Claude) Wang] 09:01:01
+Right? This hat operation,
+
+[Ziyun (Claude) Wang] 09:01:04
+Right? It's basically how you convert from
+
+[Ziyun (Claude) Wang] 09:01:08
+a three-dimensional vector to a 3x3 skill symmetric matrix.
+
+[Ziyun (Claude) Wang] 09:01:13
+Okay, there are some nice properties about these, uh, skills metric matrices.
+
+[Ziyun (Claude) Wang] 09:01:17
+Uh, for example, the transpose of a skill symmetric matrix is just a negative of the matrix itself.
+
+[Ziyun (Claude) Wang] 09:01:24
+Right? You can actually, uh, sort of massage this matrix, right? You can… you can write out
+
+[Ziyun (Claude) Wang] 09:01:29
+The transpose actually is equal to the negative of the original matrix.
+
+[Ziyun (Claude) Wang] 09:01:34
+And another key poverty is that
+
+[Ziyun (Claude) Wang] 09:01:37
+Um, if you do a matrix multiplication,
+
+[Ziyun (Claude) Wang] 09:01:42
+Uh, between this skill symmetric matrix and the V, it actually becomes a cross product
+
+[Ziyun (Claude) Wang] 09:01:48
+between the original vector that we derived the skill symmetrix matrix from,
+
+[Ziyun (Claude) Wang] 09:01:53
+And the vector, right? So actually, this…
+
+[Ziyun (Claude) Wang] 09:01:57
+uh… cross product actually becomes
+
+[Ziyun (Claude) Wang] 09:02:00
+A matrix modification, right? This is very convenient when we actually derive many things.
+
+[Ziyun (Claude) Wang] 09:02:05
+So, uh, these are sort of the backgrounds of skill symmetric matrices. These are sort of equipment… ubiquitous
+
+[Ziyun (Claude) Wang] 09:02:11
+in robotics and 3D geometry, I guess for you, you just need to memorize that this is the, uh,
+
+[Ziyun (Claude) Wang] 09:02:17
+Uh, the forward transform that takes a vector and converts it into a 3x3 matrix,
+
+[Ziyun (Claude) Wang] 09:02:21
+And you can actually, uh, if you have a skill symmetric matrix, you can basically look at
+
+[Ziyun (Claude) Wang] 09:02:27
+the individual entries of this matrix, and back out
+
+[Ziyun (Claude) Wang] 09:02:31
+the original vector,
+
+[Ziyun (Claude) Wang] 09:02:33
+So, uh, we have…
+
+[Ziyun (Claude) Wang] 09:02:35
+One way to write it is by this hat operation.
+
+[Ziyun (Claude) Wang] 09:02:38
+But we can also have these square bracket with an X at the bottom. This is also an equivalent notation for square…
+
+[Ziyun (Claude) Wang] 09:02:46
+Skill symmetric mattresses, right? So, let's go back to, uh, this definition, right? Any rotation can be written as exponential of a scale symmetric matrix,
+
+[Ziyun (Claude) Wang] 09:02:56
+And, uh, for example, if we have…
+
+[Ziyun (Claude) Wang] 09:02:58
+Um, a rotation vector here, uh, with an axis, uh, U,
+
+[Ziyun (Claude) Wang] 09:03:03
+And the, uh, angle theta.
+
+[Ziyun (Claude) Wang] 09:03:06
+We can actually use this formula, this is called Rodriguez formula, to convert from this rotation vector
+
+[Ziyun (Claude) Wang] 09:03:14
+to a proper rotation matrix. This is the formula that you need to memorize.
+
+[Ziyun (Claude) Wang] 09:03:18
+This might come up in, uh, in the future assignments and exams, right? So, there's very fundamental. It basically, uh,
+
+[Ziyun (Claude) Wang] 09:03:26
+Um, first convert.
+
+[Ziyun (Claude) Wang] 09:03:29
+This, uh, the axis,
+
+[Ziyun (Claude) Wang] 09:03:31
+of this, uh, rotation.
+
+[Ziyun (Claude) Wang] 09:03:34
+to a skill symmetric matrix,
+
+[Ziyun (Claude) Wang] 09:03:36
+Right? And now, uh, also you have the theta, they actually… you can write out the full rotation matrix by
+
+[Ziyun (Claude) Wang] 09:03:43
+adding these terms together, right? Now you have all the ingredients, you have the theta, right, you take the sine of the theta,
+
+[Ziyun (Claude) Wang] 09:03:49
+And you also have U, you convert it into secure symmetry Symmetric Matrix, and then you write this out, it actually becomes a
+
+[Ziyun (Claude) Wang] 09:03:58
+proper rotation matrix, okay? Uh, there's some…
+
+[Ziyun (Claude) Wang] 09:04:00
+Proof of this, uh, but I will skip this for this class.
+
+[Ziyun (Claude) Wang] 09:04:06
+So, uh, let's look at one concrete example of this, uh, Rodriguez formula, and we can, uh, how we can apply them. So…
+
+[Ziyun (Claude) Wang] 09:04:13
+If we have this rotation, right, 00 pi over 6,
+
+[Ziyun (Claude) Wang] 09:04:16
+And we can actually rate out, we can actually, as we derive earlier, we can compute the angle by looking at the magnitude of this rotation vector, and also we have the rotational axis, which is
+
+[Ziyun (Claude) Wang] 09:04:30
+around the, uh, orientation, right? 001, that's the z-axis.
+
+[Ziyun (Claude) Wang] 09:04:35
+And we actually convert this U into a skill symmetric matrix, right? We plug this 001 into
+
+[Ziyun (Claude) Wang] 09:04:41
+Uh, this form, and then we get this matrix, and this is the skill symmetric matrix for this, uh, for the axis.
+
+[Ziyun (Claude) Wang] 09:04:48
+And then we can also compute the square, because we'll use it in the regex formula.
+
+[Ziyun (Claude) Wang] 09:04:53
+Right, and then we can compute a square by multiplying this,
+
+[Ziyun (Claude) Wang] 09:04:57
+Um, uh, by itself, and then it becomes this.
+
+[Ziyun (Claude) Wang] 09:05:00
+Right. And then we can actually write out the full rotation matrix by plugging in these components that we
+
+[Ziyun (Claude) Wang] 09:05:06
+Pre-computed, right? We have the eye, we have the sine theta, and then we have the skill symmetric matrix, and plus 1 minus cosine,
+
+[Ziyun (Claude) Wang] 09:05:15
+times, uh, the square of the geosymmetric matrix, and this will give us the final rotation matrix, which is this, right? You can verify that this is actually a proper rotation matrix.
+
+[Ziyun (Claude) Wang] 09:05:26
+You're expected to know this, and also, uh, how to convert between, um,
+
+[Ziyun (Claude) Wang] 09:05:31
+Rotation vectors and rotation matrixes and vice versa through the regex formula and, uh,
+
+[Ziyun (Claude) Wang] 09:05:38
+Uh, another formula that we'll talk about in the next slide.
+
+[Ziyun (Claude) Wang] 09:05:41
+Adjourned?
+
+[Jarrod C] 09:05:43
+Um, just a quick sanity check, or what I think I recall. So, another way to check if it's a proper rotation matrix is that…
+
+[Jarrod C] 09:05:53
+We're computing the determinant and it being plus 1, is that another check, if I recall? Is that another way to check? A sanity check?
+
+[Jarrod C] 09:06:01
+Where is that?
+
+[Ziyun (Claude) Wang] 09:06:01
+Right, right, right. Yeah, yeah, so yeah, that's right. So you can refer back to the slides about SO3, and that has the ways to verify if a rotation matrix is proper.
+
+[Jarrod C] 09:06:13
+So, so this determinant should be… should be… if we… another way to check ourselves is that if we take the determinant of this final answer, R, it should be 1, is that correct?
+
+[Ziyun (Claude) Wang] 09:06:22
+Yeah, that's right, right? The trainer of this should be what?
+
+[Ziyun (Claude) Wang] 09:06:26
+Yeah. Uh, so if you're… so, in this regex formula, uh, if you know the rotation vector, the output is guaranteed to have a determinant of 1, which is a proper rotation matrix.
+
+[Ziyun (Claude) Wang] 09:06:39
+So, let's proceed. Uh, we looked at how we convert from axis angle to rotation matrix, but
+
+[Ziyun (Claude) Wang] 09:06:46
+We want to know the opposite, right? How do we…
+
+[Ziyun (Claude) Wang] 09:06:49
+Uh, convert rotation matrices to axis angle representation, right? So, we actually have two steps, right? This is quite, quite, uh…
+
+[Ziyun (Claude) Wang] 09:06:58
+you know, uh…
+
+[Ziyun (Claude) Wang] 09:07:01
+This is quite standard, we just need to memorize it, so basically we take the inverse cosine,
+
+[Ziyun (Claude) Wang] 09:07:04
+of, uh, this term, which is the trace of the rotation matrix minus 1 divided by 2.
+
+[Ziyun (Claude) Wang] 09:07:10
+And you can basically memorize it. There's proof of this, but we won't go into the details. So that will give us the data.
+
+[Ziyun (Claude) Wang] 09:07:16
+And then, we can actually get the axis, right? So first,
+
+[Ziyun (Claude) Wang] 09:07:21
+We take the difference between the R, which is the rotation matrix, and R transpose,
+
+[Ziyun (Claude) Wang] 09:07:26
+Right? And then we multiply it by 1 over 2 sine theta, right? We have theta from the previous step.
+
+[Ziyun (Claude) Wang] 09:07:32
+This will give us the skill symmetric matrix, right? And then we actually apply this V operation,
+
+[Ziyun (Claude) Wang] 09:07:38
+So this V operation basically means if you look at
+
+[Ziyun (Claude) Wang] 09:07:41
+Um, the entries are the skill symmetric matrix, right? Uh, if we look at, uh,
+
+[Ziyun (Claude) Wang] 09:07:46
+For example,
+
+[Ziyun (Claude) Wang] 09:07:49
+This, right? If we have this rotation matrix, so basically,
+
+[Ziyun (Claude) Wang] 09:07:53
+Uh, we can read out the individual entries of the regional vector, right? If we know this is
+
+[Ziyun (Claude) Wang] 09:08:00
+One, then the original omega Z is just negative 1, right? It's very simple, and this is what we call the V operator, which is the inverse.
+
+[Ziyun (Claude) Wang] 09:08:09
+of the head operator,
+
+[Ziyun (Claude) Wang] 09:08:12
+So we go from a 3 by 3 matrix
+
+[Ziyun (Claude) Wang] 09:08:15
+to the original, uh, vector.
+
+[Ziyun (Claude) Wang] 09:08:17
+And now, uh, we have theta and U, the rotation vector is basically the multiplication of the two.
+
+[Ziyun (Claude) Wang] 09:08:23
+Right? This is how we go from axis angle… from a rotation matrix to axis angle.
+
+[Ziyun (Claude) Wang] 09:08:30
+Uh, so for example, this is the rotation matrix that we computed from the previous slide, the previous example.
+
+[Ziyun (Claude) Wang] 09:08:36
+And then we can take the trace of R minus 1, and then we divide by 2, and we take the R cosine,
+
+[Ziyun (Claude) Wang] 09:08:43
+And actually, this will give us a theta of pi over 6, right? And then we look at the second step,
+
+[Ziyun (Claude) Wang] 09:08:50
+Uh, then we actually end up with the rotation axis, which is 001. This is consistent with the example we had before.
+
+[Ziyun (Claude) Wang] 09:08:58
+Right. And then we compute the rotation vector by multiplying theta by this univector U, and then we end up with this
+
+[Ziyun (Claude) Wang] 09:09:04
+rotation vector.
+
+[Ziyun (Claude) Wang] 09:09:06
+So, uh, and there's… there's another use for this, um, which is…
+
+[Ziyun (Claude) Wang] 09:09:12
+How do we get the, um, rotational… the angular velocity between two
+
+[Ziyun (Claude) Wang] 09:09:17
+arbitrary rotation matrices, right? Let's say we rotate an object from
+
+[Ziyun (Claude) Wang] 09:09:22
+time A to time B, and how do we get the relative rotation between the two, and how do we get the, uh, angular velocity between them? So, angular velocity is basically three values, right?
+
+[Ziyun (Claude) Wang] 09:09:35
+Instantaneous velocity of rotation around some axes, right? It's similar to a rotation vector.
+
+[Ziyun (Claude) Wang] 09:09:42
+And the way we do this is actually something like this, right? First, we look at
+
+[Ziyun (Claude) Wang] 09:09:48
+The relative transform between the two rotations,
+
+[Ziyun (Claude) Wang] 09:09:51
+So R2 times R1 transpose.
+
+[Ziyun (Claude) Wang] 09:09:54
+Like, this will give us a rotation in the SO3 space, and then we can actually, uh, use
+
+[Ziyun (Claude) Wang] 09:10:00
+This formula, uh, to…
+
+[Ziyun (Claude) Wang] 09:10:02
+compute the actual rotation vector.
+
+[Ziyun (Claude) Wang] 09:10:06
+Uh, that's between the two, right? There's the rotation back we basically compute
+
+[Ziyun (Claude) Wang] 09:10:11
+the rotation vector between the two transforms,
+
+[Ziyun (Claude) Wang] 09:10:14
+And then, the angle velocity is basically assumed to, uh,
+
+[Ziyun (Claude) Wang] 09:10:19
+to stay constant within this duration, and this is similar to how we compute velocity
+
+[Ziyun (Claude) Wang] 09:10:24
+in the sort of Euclidean space, right, we have one point, and another point, we compute the displacement between the two points, and then we divide by delta T, assuming constant velocity, then we get
+
+[Ziyun (Claude) Wang] 09:10:37
+sort of average velocity between these two points.
+
+[Ziyun (Claude) Wang] 09:10:42
+And in this case, instead of using this displacement in the 3D space, we use the displacement
+
+[Ziyun (Claude) Wang] 09:10:47
+Uh, in the form of an axis angle rotation vector, right? We have a rotation vector here, and we actually divide the rotation vector by one
+
+[Ziyun (Claude) Wang] 09:10:56
+Uh, by delta T, and this gives us sort of approximate
+
+[Ziyun (Claude) Wang] 09:11:00
+constant velocity, constant angle of velocity of the rotating body.
+
+[Ziyun (Claude) Wang] 09:11:06
+And in terms of continuous time, because now we are talking about two discrete timestamps, right, from T0 to T1,
+
+[Ziyun (Claude) Wang] 09:11:13
+Uh, but in terms of continuous time, we actually use something called the Lie algebra, right? This is something
+
+[Ziyun (Claude) Wang] 09:11:18
+Um, that you need to know the terminology of. So, rotations in the…
+
+[Ziyun (Claude) Wang] 09:11:23
+Um, you know, SO3, uh, this actually form a Li group, right? It's not only a group, but it's also a Li group. What that means is actually, uh, all these
+
+[Ziyun (Claude) Wang] 09:11:32
+Um, members of this group, they actually live on a smooth manifold, so that means you can actually move
+
+[Ziyun (Claude) Wang] 09:11:39
+smoothly from one point to a nearby point.
+
+[Ziyun (Claude) Wang] 09:11:42
+And then, it's sort of a derivative, or the small step that you can take. It's called the knee algebra.
+
+[Ziyun (Claude) Wang] 09:11:49
+Which is denoted by this SO3, right?
+
+[Ziyun (Claude) Wang] 09:11:52
+Um, you don't need to know, you know, the details, but what you need to know is this is sort of the tender space,
+
+[Ziyun (Claude) Wang] 09:11:59
+Uh, that represent the, uh, a very small rotation.
+
+[Ziyun (Claude) Wang] 09:12:03
+taken at the current
+
+[Ziyun (Claude) Wang] 09:12:05
+SO3 rotation.
+
+[Ziyun (Claude) Wang] 09:12:08
+And this allows us to sort of take the derivative
+
+[Ziyun (Claude) Wang] 09:12:11
+of a rotation, while still being on the manifold of all the other, uh, of all the rotations.
+
+[Ziyun (Claude) Wang] 09:12:18
+Uh, so, for example, uh, if we…
+
+[Ziyun (Claude) Wang] 09:12:21
+start with a rotation matrix, right? And then we just arbitrarily add some value to this rotation matrix. That doesn't actually guarantee a proper rotation matrix, right? So we can't really…
+
+[Ziyun (Claude) Wang] 09:12:33
+Pick a small step by just adding some noise to it, right? So, what we can do is actually
+
+[Ziyun (Claude) Wang] 09:12:39
+Uh, using the Lee algebra of this rotation.
+
+[Ziyun (Claude) Wang] 09:12:42
+Uh, we can actually take a small step,
+
+[Ziyun (Claude) Wang] 09:12:44
+And make sure that it's still on the manifold of all possible SL3 transformations, which are all the rotations.
+
+[Ziyun (Claude) Wang] 09:12:53
+But you just need to know this, like, quite superficially, but you need to know that this is called the Lee Algebra,
+
+[Ziyun (Claude) Wang] 09:12:59
+Um, which represents small motions in rotation.
+
+[Ziyun (Claude) Wang] 09:13:03
+And, um, this slide has a star, which means you just need to use it as a reference.
+
+[Ziyun (Claude) Wang] 09:13:09
+So, uh, basically…
+
+[Ziyun (Claude) Wang] 09:13:11
+Uh, you have, uh, if you have a continuous time,
+
+[Ziyun (Claude) Wang] 09:13:16
+observation of, uh, rotation.
+
+[Ziyun (Claude) Wang] 09:13:18
+So this is how we get a R dot. Uh, so this is changing over time.
+
+[Ziyun (Claude) Wang] 09:13:22
+Uh, we can actually compute the angular velocity in world frame, body frame, uh, using these formulas, and then there's a way to convert between them, so just like any regular
+
+[Ziyun (Claude) Wang] 09:13:32
+Uh, vectors, you can actually convert the same
+
+[Ziyun (Claude) Wang] 09:13:36
+Rotational velocity between world and body by applying a transform, a rotation between the world and the body.
+
+[Ziyun (Claude) Wang] 09:13:43
+Right? Because this is the vector, it doesn't have an origin, doesn't have a, uh…
+
+[Ziyun (Claude) Wang] 09:13:48
+Uh, it doesn't have a translation part, it basically only rotate, right? This is what this means, that you can convert
+
+[Ziyun (Claude) Wang] 09:13:53
+between, uh, velocity in body,
+
+[Ziyun (Claude) Wang] 09:13:56
+Uh, and velocity in world by multiplying, uh,
+
+[Ziyun (Claude) Wang] 09:14:01
+by this rotation matrix, and the inverse, if you want to convert it back.
+
+[Ziyun (Claude) Wang] 09:14:05
+Right. Uh, and another way to look at rotations, right, we finish axis angle, uh, another way to
+
+[Ziyun (Claude) Wang] 09:14:12
+I look at rotations, actually, we can break it down into three consecutive simpler rotations, right?
+
+[Ziyun (Claude) Wang] 09:14:17
+So, uh, for example, we can actually define, uh,
+
+[Ziyun (Claude) Wang] 09:14:22
+what we called an extrinsic XYZ, what that means is we have a rigid body, and we have a world,
+
+[Ziyun (Claude) Wang] 09:14:29
+And we can sequentially
+
+[Ziyun (Claude) Wang] 09:14:31
+rotate the rigid body,
+
+[Ziyun (Claude) Wang] 09:14:33
+three times, first by the x-axis of the world, and second by the y-axis of the world, and then…
+
+[Ziyun (Claude) Wang] 09:14:40
+by the, uh, z-axis of the world, right? This is why it's called extrinsic.
+
+[Ziyun (Claude) Wang] 09:14:45
+Uh, basically, the reference frame for this rotation never changed, right? It's always the world.
+
+[Ziyun (Claude) Wang] 09:14:50
+No matter how we apply these transforms, we still rotate with respect to the original extrinsic
+
+[Ziyun (Claude) Wang] 09:14:58
+coordinate system, which is world.
+
+[Ziyun (Claude) Wang] 09:15:00
+Right? And the alternative is actually intrinsic, right? We talk about the order of applying
+
+[Ziyun (Claude) Wang] 09:15:06
+transformations, right? For intrinsic,
+
+[Ziyun (Claude) Wang] 09:15:09
+It's poster multiplication, okay? And for extrinsic, it's pre-multiplication.
+
+[Ziyun (Claude) Wang] 09:15:14
+This is why, in this extrinsics exercise Ze, we actually have ZYX instead of XYZ, because we
+
+[Ziyun (Claude) Wang] 09:15:20
+pre-multiply. But, if we define something, uh, like intrinsic,
+
+[Ziyun (Claude) Wang] 09:15:27
+Uh, CUIX, what happens is we'll actually apply these sequentially from left to right. So ZYX,
+
+[Ziyun (Claude) Wang] 09:15:34
+actually is equivalent to this
+
+[Ziyun (Claude) Wang] 09:15:36
+extrinsic XYZ. So, intrinsic ZYX actually is equivalent to extrinsic XYZ.
+
+[Ziyun (Claude) Wang] 09:15:42
+Right. Um, so for any rotation matrix, you can actually break it down into
+
+[Ziyun (Claude) Wang] 09:15:48
+These three, uh, consecutive rotations, right? But for this, you need to specify your convention.
+
+[Ziyun (Claude) Wang] 09:15:54
+Okay, so XYZ, extrinsic XYZ is one way to do it. You can also do intrinsic XYZ.
+
+[Ziyun (Claude) Wang] 09:16:00
+Uh, and there are other ways to actually write out this rotation. This is not unique, right? You can break down any rotation into
+
+[Ziyun (Claude) Wang] 09:16:07
+An arbitrary number of, uh, you know, this parameterizations, depending on what you need.
+
+[Ziyun (Claude) Wang] 09:16:12
+And, um, so this is wider, uh, angles, and this sometimes is also called rope page yaw. So, row-page yaw is usually defined with respect to intrinsic, right? You'll see this a lot in
+
+[Ziyun (Claude) Wang] 09:16:26
+Uh, aerospace and also robotics. So the rope HR is basically XYZ,
+
+[Ziyun (Claude) Wang] 09:16:30
+And you, uh, apply these sequentially, uh, which is intrinsic, which is sort of a sequence of intrinsic,
+
+[Ziyun (Claude) Wang] 09:16:38
+transformations.
+
+[Ziyun (Claude) Wang] 09:16:41
+And, um…
+
+[Ziyun (Claude) Wang] 09:16:43
+So… let's look at this. So, it turns out that interpolating… interpolation between rotation matrices is actually not
+
+[Ziyun (Claude) Wang] 09:16:52
+trivial, right? Interpolation between
+
+[Ziyun (Claude) Wang] 09:16:55
+Uh, these, these, um, axis angles are actually not very trivial, right? So we need…
+
+[Ziyun (Claude) Wang] 09:17:00
+More ways to represent rotations so that we can do, let's say, average and interpolation between two
+
+[Ziyun (Claude) Wang] 09:17:08
+Uh, to transforms more easily. This is something called quaternion, which we'll talk about
+
+[Ziyun (Claude) Wang] 09:17:13
+Uh, in the, uh…
+
+[Ziyun (Claude) Wang] 09:17:16
+in the future. Um, so essentially…
+
+[Ziyun (Claude) Wang] 09:17:20
+Um, let's see…
+
+[Ziyun (Claude) Wang] 09:17:22
+Okay, I guess I, uh, didn't include quaternity in these slides, but you actually have them in the slides I posted on
+
+[Ziyun (Claude) Wang] 09:17:31
+Uh, cameras. So the idea is we have actually, uh, have a…
+
+[Ziyun (Claude) Wang] 09:17:36
+new way, right here, this queue, Q value, and this Q, uh…
+
+[Ziyun (Claude) Wang] 09:17:42
+this Q value actually has…
+
+[Ziyun (Claude) Wang] 09:17:43
+Uh, several, uh, several entries. It has four values, so this is what it's called a quaternion, so it has a real part, an imaginary part, and then you can actually represent any rotation
+
+[Ziyun (Claude) Wang] 09:17:53
+Um, with those four values, and then it's easy to do interpolation between them.
+
+[Ziyun (Claude) Wang] 09:17:59
+But the arithmetic between these, uh,
+
+[Ziyun (Claude) Wang] 09:18:03
+These rotation is actually a little bit complex. This is why I didn't include it in this lecture, but we'll come back to that, right? So, all you need to remember is, uh, quaternity is actually a common way to represent representations in graphics.
+
+[Ziyun (Claude) Wang] 09:18:17
+And also, it doesn't have a lot of issues, like gimbal logs, or overparameterization of other representations, and we can use something called a slurp.
+
+[Ziyun (Claude) Wang] 09:18:25
+Uh, to interpolate between two rotations. I will put some handouts on this.
+
+[Ziyun (Claude) Wang] 09:18:31
+So, uh, all you need to remember from this…
+
+[Ziyun (Claude) Wang] 09:18:34
+This lecture is that you actually have this special entity called rotations,
+
+[Ziyun (Claude) Wang] 09:18:40
+And rotations cannot simply be added together, right? As I said, if you… the only way we can
+
+[Ziyun (Claude) Wang] 09:18:47
+take actions to compose rotation matrices in spite
+
+[Ziyun (Claude) Wang] 09:18:51
+Matrix multiplication, right? You can multiply two matrices together, and it's guaranteed to give you another rotation matrix, but you can't simply add them together, right?
+
+[Ziyun (Claude) Wang] 09:18:58
+What that means is you can't actually take the average by taking the average of the, uh,
+
+[Ziyun (Claude) Wang] 09:19:03
+Uh, the entries of the rotation matrices, right? You can't take two 3x3 matrices, add them together, divide by 2, that doesn't proper rotation matrix. So you need a way to actually
+
+[Ziyun (Claude) Wang] 09:19:13
+Uh, you know, go, um…
+
+[Ziyun (Claude) Wang] 09:19:16
+along these curves on the manifold of all possible rotations,
+
+[Ziyun (Claude) Wang] 09:19:20
+to get an interpolation, right? To make sure that you're still on the manifold of
+
+[Ziyun (Claude) Wang] 09:19:25
+plausible of valid rotations.
+
+[Ziyun (Claude) Wang] 09:19:28
+And also, computing the difference in velocity is not as simple as transition, right? You still need to do the R times R transpose,
+
+[Ziyun (Claude) Wang] 09:19:35
+to get the, uh, relative rotation, and computing the instantaneous velocity requires us to
+
+[Ziyun (Claude) Wang] 09:19:42
+you know, have more complex operations, which I, uh, described in the previous slides.
+
+[Ziyun (Claude) Wang] 09:19:48
+Um, so averaging and interpolating actually needs special methods, like we mentioned, uh, quaternions and slurp.
+
+[Ziyun (Claude) Wang] 09:19:55
+And, uh, we'll come back to that.
+
+[Ziyun (Claude) Wang] 09:19:58
+So, why is this important, right? Why do we spend so much time on transforms and rotations? Uh, it turns out that actually robots have many frames.
+
+[Ziyun (Claude) Wang] 09:20:07
+For example, this is taken from the Kitty dataset, right? This is one of the earliest
+
+[Ziyun (Claude) Wang] 09:20:12
+self-driving datasets on the market. And, uh, it actually has these three mainframes, right? We have
+
+[Ziyun (Claude) Wang] 09:20:19
+Uh, this IMU frame, IMU GPS frame, right, this is sort of the body frame of
+
+[Ziyun (Claude) Wang] 09:20:25
+Uh, this car, right, in green.
+
+[Ziyun (Claude) Wang] 09:20:27
+And in red, we actually have camera frames, right? This is similar to the example I had earlier, where actually we define the coordinate frame of individual cameras, and we want to
+
+[Ziyun (Claude) Wang] 09:20:37
+Uh, you know, convert points from the camera frame
+
+[Ziyun (Claude) Wang] 09:20:41
+to, uh, the, uh, the body frame,
+
+[Ziyun (Claude) Wang] 09:20:43
+And, uh, university, we also care about how do we
+
+[Ziyun (Claude) Wang] 09:20:48
+have a point in the world coordinate system, and we have a point in the body coordinate system, how do we project these points into the camera frame, right? So projection…
+
+[Ziyun (Claude) Wang] 09:20:57
+Uh, it's the next topic that we really need to focus on getting the right coordinate system for the points before we can project.
+
+[Ziyun (Claude) Wang] 09:21:05
+And then we have this, um…
+
+[Ziyun (Claude) Wang] 09:21:08
+Blue coordinate system, this is Velodyne, this is, uh, basically LiDAR. This gives us the 3D points in this particular coordinate system. But if we want to look at the points from
+
+[Ziyun (Claude) Wang] 09:21:17
+Uh, you know, defined in the slider frame.
+
+[Ziyun (Claude) Wang] 09:21:20
+And the points you find in this, uh, camera frame, we can't naively look at them, uh…
+
+[Ziyun (Claude) Wang] 09:21:26
+just looking at the numerical values, right? We need to convert these points into a common coordinate system. Uh, sometimes
+
+[Ziyun (Claude) Wang] 09:21:32
+That's just a body of the robot.
+
+[Ziyun (Claude) Wang] 09:21:35
+This is why we care about these transforms, that we actually end up with many frames. And in reality, this is what we're dealing with. What you're seeing here, this is a camera calibration matrix, right? We have camera zero,
+
+[Ziyun (Claude) Wang] 09:21:47
+Camera 1, Camera 2, Camera 3. So usually we have many, many cameras, right? These cameras…
+
+[Ziyun (Claude) Wang] 09:21:53
+They have transformations between each other, right? This is defined by this, right? TCN.
+
+[Ziyun (Claude) Wang] 09:22:00
+CNN1, so this is the transformation of this camera with respect to the previous camera.
+
+[Ziyun (Claude) Wang] 09:22:05
+And then we also similarly, have 2 to 1, 3 to 2, right? With this calibration matrix, we'll need to
+
+[Ziyun (Claude) Wang] 09:22:11
+convert things between different frames, and this is why, uh, these frames are so important. We need to
+
+[Ziyun (Claude) Wang] 09:22:18
+be familiar with these 4x4 transformations and be able to read and verify that these matrices actually fit our geometric intuition.
+
+[Ziyun (Claude) Wang] 09:22:26
+Uh, all the… of the body, right? For example, if we look at
+
+[Ziyun (Claude) Wang] 09:22:31
+does, um, uh, does Velodyne, this, um, blue frame here, and then we know there are some points in the X direction,
+
+[Ziyun (Claude) Wang] 09:22:38
+And then we convert these points into, uh, using the transform into the…
+
+[Ziyun (Claude) Wang] 09:22:43
+Uh, they said the camera coordinate system, right? We need to know… we need to ensure that this point is actually in the Z direction, positive Z direction of the camera. Otherwise, our transformation is wrong.
+
+[Ziyun (Claude) Wang] 09:22:54
+So, we need to have a geometric understanding by looking at the intuition, by looking at these frames, by looking at these pictures.
+
+[Ziyun (Claude) Wang] 09:23:02
+But… and then we can actually look at the rotation, uh, the translation rotation matrices, as well as the converted points, uh, to make sure that our intuition is correct.
+
+[Ziyun (Claude) Wang] 09:23:10
+Um, and any error in this calibration can actually result in very catastrophic failures in the robotic system, so we need to be very careful. That's why calibration is actually a big topic that we'll cover later in the lectures.
+
+[Ziyun (Claude) Wang] 09:23:26
+Okay. Um, so the takeaways for this lecture, right, this is what you need to know, and uh, you know, in the
+
+[Ziyun (Claude) Wang] 09:23:32
+Projects and the exams are expected to do this, right? How do… you need to know how do we represent a robot with a set of transforms?
+
+[Ziyun (Claude) Wang] 09:23:39
+Right, if we attach some coordinate frames on the robot, how do we write them? How do we verify they're correct?
+
+[Ziyun (Claude) Wang] 09:23:46
+And how do we move a rigid body, right? This is the second point. If we know that there is a rotation and translation, how do we move from one configuration to another?
+
+[Ziyun (Claude) Wang] 09:23:54
+And we need to read and examine the rotation matrix, which means that you need to know this is proper, does it have a weird reflection?
+
+[Ziyun (Claude) Wang] 09:24:02
+Uh, that just screws out the whole transformation, uh, chain. And then we need to know the conversion between, you know, different representations, let's say a rotation vector and a 3x3 rotation matrix,
+
+[Ziyun (Claude) Wang] 09:24:14
+And, uh, vice versa, right? And coming back.
+
+[Ziyun (Claude) Wang] 09:24:17
+And then we also need to be able to compute the angular velocity between two transforms, and you can basically follow the steps denoted in the
+
+[Ziyun (Claude) Wang] 09:24:24
+Uh, in the slides.
+
+[Ziyun (Claude) Wang] 09:24:26
+Uh, so that's it for the rotation part. Now I want to sort of switch gears to…
+
+[Ziyun (Claude) Wang] 09:24:34
+Uh, another set of slides.
+
+[Ziyun (Claude) Wang] 09:24:36
+I just one second.
+
+[Ziyun (Claude) Wang] 09:24:39
+Right. Uh, I guess we only have about 20 minutes, um,
+
+[Ziyun (Claude) Wang] 09:24:45
+Let's see…
+
+[Ziyun (Claude) Wang] 09:24:48
+I guess this is enough time for us to give a quick intro. Now we want to look at, um, you know, the main sensor that we have in this class, which are cameras, right? These are very powerful.
+
+[Ziyun (Claude) Wang] 09:24:58
+Because humans can actually perform many actions with just camera, with just a visual feed, right? Even if we don't hear anything, we can actually observe the world and know where to go. For navigation, it also
+
+[Ziyun (Claude) Wang] 09:25:11
+With our eyes, we can tell where are the objects and how we can pick them up.
+
+[Ziyun (Claude) Wang] 09:25:16
+So, camera sensors are actually very important sensors for any robotic perception systems, so…
+
+[Ziyun (Claude) Wang] 09:25:22
+Uh, we need to know the principles of forming images,
+
+[Ziyun (Claude) Wang] 09:25:26
+Uh, from cameras, and how cameras are designed.
+
+[Ziyun (Claude) Wang] 09:25:30
+So, these are basically typical camera sensors that we… I just wanted to ask, do we, uh, can you guys see the slides?
+
+[Ziyun (Claude) Wang] 09:25:38
+Now, with two cameras.
+
+[Ziyue Zheng] 09:25:42
+Yes, we can
+
+[Ziyun (Claude) Wang] 09:25:43
+Okay, cool. So we have two pictures here, right? So on the two pictures here, the first one is…
+
+[Ziyun (Claude) Wang] 09:25:48
+Uh, sort of a commercial camera on the left,
+
+[Ziyun (Claude) Wang] 09:25:51
+You recognize that this is a Sony camera, you have a camera body, and also have a
+
+[Ziyun (Claude) Wang] 09:25:55
+pretty bulky lens, right, in front of the camera. And then, if we move to the right, this is actually
+
+[Ziyun (Claude) Wang] 09:26:02
+Uh, sort of the cameras that we use in industrial settings and for robotics, right? It's a lot smaller. It has two parts, right? So,
+
+[Ziyun (Claude) Wang] 09:26:10
+This, in the circle, is the camera sensor itself, right? You can see the stem out sensor here,
+
+[Ziyun (Claude) Wang] 09:26:15
+Also, the circuit, uh, that, uh, supports this sensor,
+
+[Ziyun (Claude) Wang] 09:26:20
+The result here… the signal.
+
+[Ziyun (Claude) Wang] 09:26:22
+And we also have a camera lens on the left.
+
+[Ziyun (Claude) Wang] 09:26:26
+Right? This is a lot smaller, uh…
+
+[Ziyun (Claude) Wang] 09:26:28
+And, uh, it basically functions the same way, right? So, the lens is responsible for gathering light from
+
+[Ziyun (Claude) Wang] 09:26:37
+the scene, and then convert them into, you know, rays that are projected onto the camera sensor. The camera sensor basically reads out that value over some, uh, let's say, exposure time, and then record those values as digital signal.
+
+[Ziyun (Claude) Wang] 09:26:53
+Right. So, uh, let's first look at, you know, for a regular camera, what's the projection model?
+
+[Ziyun (Claude) Wang] 09:26:59
+You'll probably see this in, uh, you know, high school physics, right? If you have… if we have a lens,
+
+[Ziyun (Claude) Wang] 09:27:05
+Right? We have an object,
+
+[Ziyun (Claude) Wang] 09:27:07
+And then we define a lens center here.
+
+[Ziyun (Claude) Wang] 09:27:10
+We can actually compute the image of this object,
+
+[Ziyun (Claude) Wang] 09:27:13
+onto a projected image plate.
+
+[Ziyun (Claude) Wang] 09:27:15
+Right? So the way we look at this is, let's say we want to project this point,
+
+[Ziyun (Claude) Wang] 09:27:20
+All the parallel lines, right?
+
+[Ziyun (Claude) Wang] 09:27:23
+Uh, go through the lens, and then…
+
+[Ziyun (Claude) Wang] 09:27:26
+they actually converged to this point, F prime, which is the focal point.
+
+[Ziyun (Claude) Wang] 09:27:30
+Right, this is the focal point of, uh, this… this lens. And then…
+
+[Ziyun (Claude) Wang] 09:27:36
+Uh, we also can, um, can shoot array from this…
+
+[Ziyun (Claude) Wang] 09:27:42
+But this object point, through the projection center,
+
+[Ziyun (Claude) Wang] 09:27:46
+to the image play, right?
+
+[Ziyun (Claude) Wang] 09:27:47
+And the intersection between these two rays, the red and blue rays,
+
+[Ziyun (Claude) Wang] 09:27:52
+actually becomes the image of an object.
+
+[Ziyun (Claude) Wang] 09:27:55
+Okay, um, and we have several values defined here, right? We have
+
+[Ziyun (Claude) Wang] 09:28:00
+Uh, several things defined here. We have F', which is the focal point,
+
+[Ziyun (Claude) Wang] 09:28:05
+They're all the parallel rays actually converge to
+
+[Ziyun (Claude) Wang] 09:28:07
+Uh, this single point, uh, and we call this distance from the projection center to this focal point,
+
+[Ziyun (Claude) Wang] 09:28:14
+The focal length. This is F.
+
+[Ziyun (Claude) Wang] 09:28:16
+Okay? And the distance between the object to the lens?
+
+[Ziyun (Claude) Wang] 09:28:19
+Uh, which is A. This is the distance, right, uh, between, uh, basically, essentially the camera to the object.
+
+[Ziyun (Claude) Wang] 09:28:26
+And then we have B, which is the distance between the length, to the image plate.
+
+[Ziyun (Claude) Wang] 09:28:32
+Right, this is the whole parameterization of this, uh, camera, uh, camera plus lens, uh, system.
+
+[Ziyun (Claude) Wang] 09:28:39
+And then, um, the equation…
+
+[Ziyun (Claude) Wang] 09:28:42
+to get sharp images is actually this, so 1 over A plus 1 over B equals 1 over F.
+
+[Ziyun (Claude) Wang] 09:28:48
+Right? So, if this is satisfied,
+
+[Ziyun (Claude) Wang] 09:28:51
+We can actually get a…
+
+[Ziyun (Claude) Wang] 09:28:54
+sharp point on the image plane.
+
+[Ziyun (Claude) Wang] 09:28:57
+Okay, so something, uh, you want to think about is, what's the, sort of, in terms of scale, what's the relationship between
+
+[Ziyun (Claude) Wang] 09:29:04
+A and B and F, right? So usually, if we take a picture of an object, this A is actually much larger
+
+[Ziyun (Claude) Wang] 09:29:12
+Then B, and then F.
+
+[Ziyun (Claude) Wang] 09:29:14
+Right? So because we are talking about meters away, and focal length,
+
+[Ziyun (Claude) Wang] 09:29:18
+or let's say a typical camera is, like, on the millimeter scale, right? We're talking about, like, 35mm, 50 millimeters.
+
+[Ziyun (Claude) Wang] 09:29:26
+For the physical distance between the focal point and the lens, but we're talking about meters. So, in terms of scale,
+
+[Ziyun (Claude) Wang] 09:29:33
+Uh, A actually dominates, uh, the other two terms.
+
+[Ziyun (Claude) Wang] 09:29:38
+Okay. And, uh, this leads to a problem of focusing, right? If this equation is satisfied, we actually have
+
+[Ziyun (Claude) Wang] 09:29:45
+a sharp image, that this is something we observe on the left, right, with this chair, everything is in focus, right? We call it in focus.
+
+[Ziyun (Claude) Wang] 09:29:53
+But if we somehow doesn't…
+
+[Ziyun (Claude) Wang] 09:29:56
+Oh, if we somehow don't have this equation, right, it does not satisfied, then we have an autofocus image, right?
+
+[Ziyun (Claude) Wang] 09:30:02
+Sometimes when you take your phone camera out, and you point,
+
+[Ziyun (Claude) Wang] 09:30:05
+at a very close object, and suddenly you move to a far object, right? When A changes, suddenly.
+
+[Ziyun (Claude) Wang] 09:30:11
+it becomes autofocus, right? You don't get a sharp image.
+
+[Ziyun (Claude) Wang] 09:30:15
+So, uh, for a perspective camera, perspective camera,
+
+[Ziyun (Claude) Wang] 09:30:21
+Uh, the assumption is, compared to BNF,
+
+[Ziyun (Claude) Wang] 09:30:25
+A is very big, right? We basically…
+
+[Ziyun (Claude) Wang] 09:30:27
+Assume that A is infinite, right? As we… as A approach
+
+[Ziyun (Claude) Wang] 09:30:31
+Uh, infinite? Infinity?
+
+[Ziyun (Claude) Wang] 09:30:33
+Um, we actually end up with 1 over B equals 1 over F.
+
+[Ziyun (Claude) Wang] 09:30:39
+Right? This is if we, uh, plug in A equals infinity into this equation right this term,
+
+[Ziyun (Claude) Wang] 09:30:45
+becomes 0, and 1 over B is just simply a 1 over F, right? This is the assumption of a perspective camera.
+
+[Ziyun (Claude) Wang] 09:30:52
+Right, what do I mean by perspective camera? We'll see. So, this…
+
+[Ziyun (Claude) Wang] 09:30:56
+is basically a perspective camera, right? This is actually the earliest inspiration for a camera, and this is a physical phenomenon called camera obscura.
+
+[Ziyun (Claude) Wang] 09:31:07
+So, what people realize is that, um, you know, in the old times, if we stay in a dark room,
+
+[Ziyun (Claude) Wang] 09:31:15
+And we have a little pinhole,
+
+[Ziyun (Claude) Wang] 09:31:17
+On the wall of this room, we actually get a projection of the outside world.
+
+[Ziyun (Claude) Wang] 09:31:21
+Through this little pinhole on the back wall,
+
+[Ziyun (Claude) Wang] 09:31:25
+of, uh, this… of this darkroom, right? Then we see a sort of upside-down image of the outside world.
+
+[Ziyun (Claude) Wang] 09:31:31
+But this is a physical phenomenon called camera obscura. So here, we actually don't have a lens, right, per se. It's just a pinhole.
+
+[Ziyun (Claude) Wang] 09:31:39
+And the projection model is actually the perspective projection model.
+
+[Ziyun (Claude) Wang] 09:31:43
+Right? So this is called a pinhole projection model, right? So, essentially,
+
+[Ziyun (Claude) Wang] 09:31:49
+the… if we simplify this, uh, into these lines,
+
+[Ziyun (Claude) Wang] 09:31:52
+Uh, what happens is we have a, uh,
+
+[Ziyun (Claude) Wang] 09:31:56
+This is the wall that has a hole on it, right? This is the, uh…
+
+[Ziyun (Claude) Wang] 09:32:01
+the, uh, the plane defined by the origin, which is the projection center.
+
+[Ziyun (Claude) Wang] 09:32:07
+Here. Uh, and if we have a point,
+
+[Ziyun (Claude) Wang] 09:32:11
+We need to project this point, P,
+
+[Ziyun (Claude) Wang] 09:32:14
+Right, XZ onto the image plane.
+
+[Ziyun (Claude) Wang] 09:32:17
+onto the image play. Uh, and as you can see, uh, because this is a straight ray, right?
+
+[Ziyun (Claude) Wang] 09:32:22
+from this physical point,
+
+[Ziyun (Claude) Wang] 09:32:24
+To this point on the image plane.
+
+[Ziyun (Claude) Wang] 09:32:27
+These two triangles actually form similar triangle, right? We have the same angles at the…
+
+[Ziyun (Claude) Wang] 09:32:33
+Uh, at this point. And then we also have right angles here, right?
+
+[Ziyun (Claude) Wang] 09:32:37
+And, uh, this actually forms a similar triangle, which means the ratio between
+
+[Ziyun (Claude) Wang] 09:32:42
+Uh, you know, these… the regional…
+
+[Ziyun (Claude) Wang] 09:32:45
+Uh, height, which is X.
+
+[Ziyun (Claude) Wang] 09:32:47
+And, uh, the height of the image.
+
+[Ziyun (Claude) Wang] 09:32:51
+It's actually the same, uh, between…
+
+[Ziyun (Claude) Wang] 09:32:54
+Uh, the, uh, the, uh, focal length and the depth
+
+[Ziyun (Claude) Wang] 09:32:57
+of the, uh… let me say this. Basically, the ratios between different edges of this triangle are the same.
+
+[Ziyun (Claude) Wang] 09:33:04
+And then, well, we can actually write out this similar triangle equation, right? So we can say X divided by minus F,
+
+[Ziyun (Claude) Wang] 09:33:11
+And so, it's actually simp… is the same as big X divided by Z.
+
+[Ziyun (Claude) Wang] 09:33:16
+So, big S divided Z is actually this vertical line,
+
+[Ziyun (Claude) Wang] 09:33:19
+Right? Divided by the distance.
+
+[Ziyun (Claude) Wang] 09:33:22
+Right, because a similar triangle is actually the same as the height of
+
+[Ziyun (Claude) Wang] 09:33:27
+Uh, this image divided by the focal length.
+
+[Ziyun (Claude) Wang] 09:33:31
+Okay? So, basically,
+
+[Ziyun (Claude) Wang] 09:33:33
+Using this equation, we can actually model the projection of a 3D point,
+
+[Ziyun (Claude) Wang] 09:33:38
+onto a, uh, onto an image play. So in this case, we're only looking at a sort of a, uh,
+
+[Ziyun (Claude) Wang] 09:33:45
+OneDD sample, right? So we have, uh…
+
+[Ziyun (Claude) Wang] 09:33:47
+It's actually a 2D example. We had Z as the depth,
+
+[Ziyun (Claude) Wang] 09:33:51
+and acts as the, um, the location of
+
+[Ziyun (Claude) Wang] 09:33:54
+the object point, and we want to project this point onto the image plane.
+
+[Ziyun (Claude) Wang] 09:33:58
+Right. So, uh, this gives us the pinhole projection equation, which means that if we know
+
+[Ziyun (Claude) Wang] 09:34:05
+the height or the position of a point, as well as the depth of the point.
+
+[Ziyun (Claude) Wang] 09:34:10
+We can actually, uh, compute
+
+[Ziyun (Claude) Wang] 09:34:13
+The projection of this point
+
+[Ziyun (Claude) Wang] 09:34:16
+onto an image plane, which is defined by
+
+[Ziyun (Claude) Wang] 09:34:19
+Uh, this negative F depth.
+
+[Ziyun (Claude) Wang] 09:34:21
+Right, is this clear to everyone? I feel like I probably, uh, skipped a few things. I just wanted to understand if everyone, uh,
+
+[Ziyun (Claude) Wang] 09:34:33
+And I was on the same page. So, like, we have a 3D point, we know how to project them onto a 2D plane.
+
+[Ziyun (Claude) Wang] 09:34:38
+Uh, I guess we have a physical point, and we want to project them onto the image plane.
+
+[Ziyun (Claude) Wang] 09:34:43
+Uh, they're all in, uh, this 2D coordinate system, so it's Z,
+
+[Ziyun (Claude) Wang] 09:34:48
+is the depth, and X is the height of the point. In this case, it's also in 1D is sort of the position of the point.
+
+[Ziyun (Claude) Wang] 09:34:57
+Is this clear? Do you have any questions?
+
+[Ziyun (Claude) Wang] 09:35:03
+So if we go back to…
+
+[Ziyun (Claude) Wang] 09:35:05
+to this, right? This is similar, right?
+
+[Ziyun (Claude) Wang] 09:35:09
+Um, along this axis, we have the location of the point,
+
+[Ziyun (Claude) Wang] 09:35:13
+we can actually project them… oh, sorry, a location of the point in the outside world, and we can project them
+
+[Ziyun (Claude) Wang] 09:35:18
+Onto the image plane, right? This is the image plane defined by negative F.
+
+[Ziyun (Claude) Wang] 09:35:24
+Z equals negative F in, uh, in the, in the next slide, right? And then we can actually project, we know the location of
+
+[Ziyun (Claude) Wang] 09:35:32
+Uh, this point projected,
+
+[Ziyun (Claude) Wang] 09:35:34
+onto the image plane, right? This is the equation here.
+
+[Ziyun (Claude) Wang] 09:35:38
+So, Jarrah?
+
+[Jarrod C] 09:35:40
+Uh, yes, I'm trying to, um…
+
+[Jarrod C] 09:35:43
+I guess where I'm kind of stuck at is, uh…
+
+[Ziyun (Claude) Wang] 09:35:46
+Mm-hmm.
+
+[Jarrod C] 09:35:48
+like, uh, what's…
+
+[Jarrod C] 09:35:50
+what kind of information or usefulness, um, or application. I'm not understanding the…
+
+[Jarrod C] 09:35:58
+I understand the math, but I'm just saying, how am I going to apply this? What problem are we solving?
+
+[Ziyun (Claude) Wang] 09:36:04
+Right.
+
+[Jarrod C] 09:36:04
+With this equation, how is this useful? How would we apply it in a real problem? So, that's kind of where I'm trying to disconnect it at.
+
+[Ziyun (Claude) Wang] 09:36:09
+Okay.
+
+[Ziyun (Claude) Wang] 09:36:14
+I see, yeah, this is the good point. For example, uh, if we know that there is a 3D point in the world,
+
+[Ziyun (Claude) Wang] 09:36:22
+Right. Or let's say a 3D object, and we want to know
+
+[Ziyun (Claude) Wang] 09:36:27
+what this object looks,
+
+[Ziyun (Claude) Wang] 09:36:29
+Uh, in the image.
+
+[Ziyun (Claude) Wang] 09:36:31
+Right? We need somehow to convert
+
+[Ziyun (Claude) Wang] 09:36:33
+that 3D point,
+
+[Ziyun (Claude) Wang] 09:36:36
+onto, uh, a 2D pixel.
+
+[Ziyun (Claude) Wang] 09:36:39
+Right, this is where the projection comes in, right? We get…
+
+[Ziyun (Claude) Wang] 09:36:43
+a projection of the outside world onto a 2D plane.
+
+[Ziyun (Claude) Wang] 09:36:48
+And, uh, we need to use this equation.
+
+[Ziyun (Claude) Wang] 09:36:50
+to do it. Right?
+
+[Ziyun (Claude) Wang] 09:36:52
+So, X here, this is basically the location of a point in the…
+
+[Ziyun (Claude) Wang] 09:36:58
+Uh, in the physical world, and Z…
+
+[Ziyun (Claude) Wang] 09:37:01
+is the distance between
+
+[Ziyun (Claude) Wang] 09:37:04
+the projection center, and the object.
+
+[Ziyun (Claude) Wang] 09:37:06
+And we also know the focal length.
+
+[Ziyun (Claude) Wang] 09:37:08
+So with this equation, we can actually compute the coordinate
+
+[Ziyun (Claude) Wang] 09:37:12
+Uh, or the, uh, uh…
+
+[Ziyun (Claude) Wang] 09:37:15
+Yeah, so basically the ray…
+
+[Ziyun (Claude) Wang] 09:37:18
+Um, that can intersect the image plane,
+
+[Ziyun (Claude) Wang] 09:37:22
+at a certain location, right? This is where we actually apply this pinhole projection equation.
+
+[Jarrod C] 09:37:29
+So, Professor, so, um, so you have a 3D, um,
+
+[Jarrod C] 09:37:33
+A 3D object, and you're projecting it on a 2D image plane, and you're trying to find, like,
+
+[Jarrod C] 09:37:41
+Um, like, uh, where it is in 3D space, like, the distance… I'm trying to look at the… I'm not able to quickly, uh, look at the equation and decipher what, uh…
+
+[Jarrod C] 09:37:51
+what, uh… what is the, um, variable we're solving for? I haven't really… I know it's easy, but I need to take a second to think, but, like, we're trying to solve for where… what distance are… is it… where is it at in the 3D space?
+
+[Ziyun (Claude) Wang] 09:38:04
+I see, I see. I know where the confusion comes right now, so we're not trying to…
+
+[Ziyun (Claude) Wang] 09:38:09
+solve this equation, right? This is just a, you know, the calculation of this X.
+
+[Ziyun (Claude) Wang] 09:38:14
+from, um, the physical point and the distance, and the focal length, right? Uh, let's assume that there is another problem where you care about
+
+[Ziyun (Claude) Wang] 09:38:24
+the, uh, the depth, right? You can actually solve Z based on the other values, depends on
+
+[Ziyun (Claude) Wang] 09:38:30
+in the particular givens for our… for our problem, right? In this case,
+
+[Ziyun (Claude) Wang] 09:38:34
+I'm assuming that, you know, we know the 3D position and the distance, X and Z.
+
+[Ziyun (Claude) Wang] 09:38:40
+for a physical point, and we want to know where that lands on our image plane, right? This is just a forward, right?
+
+[Ziyun (Claude) Wang] 09:38:46
+we're not trying to solve anything, like, we want to compute this small X.
+
+[Jarrod C] 09:38:55
+Uh, I'm not… I need to think about it later on. I'm not still quite clear, but I just need to think about it.
+
+[Ziyun (Claude) Wang] 09:39:03
+Okay, okay, uh, sounds good. So basically, um, what the big takeaway you get from this is, actually,
+
+[Ziyun (Claude) Wang] 09:39:10
+Uh, this is the pinhole projection, and for a physical point, you can use this equation to convert to, uh, sort of a point in the image plane.
+
+[Ziyun (Claude) Wang] 09:39:21
+Right? You can get a 3D point,
+
+[Ziyun (Claude) Wang] 09:39:22
+And, uh, you can get a 3D point, and all the points along this ray will be projected onto a point on the image plane.
+
+[Ziyun (Claude) Wang] 09:39:31
+And this point is X, right? How you project from a physical point to an image point.
+
+[Ziyun (Claude) Wang] 09:39:38
+All right, uh, so if this is confusing, I will have another, uh,
+
+[Ziyun (Claude) Wang] 09:39:43
+sort of set of size, and maybe a tutorial on this.
+
+[Ziyun (Claude) Wang] 09:39:46
+But this is very essential, right? This is the…
+
+[Ziyun (Claude) Wang] 09:39:48
+sort of a single equation you need to understand for projective, uh, for, uh, camera projection.
+
+[Ziyun (Claude) Wang] 09:39:56
+And, uh, I guess this is more concrete, right? More concretely, uh,
+
+[Ziyun (Claude) Wang] 09:40:01
+we have a physical point X here.
+
+[Ziyun (Claude) Wang] 09:40:04
+And then we care about, on this image plane, where that point lands on, right?
+
+[Ziyun (Claude) Wang] 09:40:09
+So, essentially, this is what it's doing, right? We're trying to compute small x, which is the location
+
+[Ziyun (Claude) Wang] 09:40:16
+of this, uh, the projection of this, uh, image point.
+
+[Ziyun (Claude) Wang] 09:40:21
+Sorry, this physical point onto the image plate.
+
+[Ziyun (Claude) Wang] 09:40:23
+Right? X is a location here.
+
+[Ziyun (Claude) Wang] 09:40:25
+Okay? So, Gerald, if you look at this,
+
+[Ziyun (Claude) Wang] 09:40:28
+So this is what we're trying to compute. What is X?
+
+[Ziyun (Claude) Wang] 09:40:31
+with a small X. So, if we know
+
+[Ziyun (Claude) Wang] 09:40:34
+The exact 3D location of this big X,
+
+[Ziyun (Claude) Wang] 09:40:36
+We can actually do a big X divided by Z times F,
+
+[Ziyun (Claude) Wang] 09:40:40
+That will give us the…
+
+[Ziyun (Claude) Wang] 09:40:42
+Uh, the horizontal location of the small X, right? Similarly, vertically, we can
+
+[Ziyun (Claude) Wang] 09:40:48
+Uh, do a Y divided by C times F,
+
+[Ziyun (Claude) Wang] 09:40:50
+This will give us the Y location, right, the vertical location, um, the vertical location of this point projected onto the image plane. So the horizontal,
+
+[Ziyun (Claude) Wang] 09:41:02
+And vertical, right? So, basically, we have a 3D point through this, we know where there are
+
+[Ziyun (Claude) Wang] 09:41:08
+projected onto, uh…
+
+[Ziyun (Claude) Wang] 09:41:10
+in this image clay.
+
+[Ziyun (Claude) Wang] 09:41:14
+Go ahead
+
+[Jarrod C] 09:41:15
+Uh, yes, uh, okay, so, um, maybe a slightly clearer, like, okay, so…
+
+[Jarrod C] 09:41:21
+Uh, we have it at a point, and then we're trying to see or solve for where it lands on the image plane. Is that…
+
+[Jarrod C] 09:41:28
+Is that? Okay. Okay.
+
+[Ziyun (Claude) Wang] 09:41:28
+Yes, exactly, exactly. You're not… you're not solving anything, per se, on the right-hand side, right? You're… you're only computing the X and Y based on the values you already know from your camera intrinsics and also the physical configuration of this point.
+
+[Ziyun (Claude) Wang] 09:41:43
+Right? And then you're… you're just computing X sub Y. This is the simplest application of this.
+
+[Jarrod C] 09:41:49
+Okay.
+
+[Ziyun (Claude) Wang] 09:41:49
+But in the future, you might… you might encounter other problems where you have X and Y, uh, you have F, and you're trying to solve for Z, right, for example. If we know
+
+[Ziyun (Claude) Wang] 09:42:00
+Uh, the big X, we know the small X, we're trying to solve Z, and this is all possible, right? Many problems can actually use this formulation.
+
+[Ziyun (Claude) Wang] 09:42:10
+Right. Um…
+
+[Ziyun (Claude) Wang] 09:42:12
+And, uh, I guess we have 3 more minutes.
+
+[Ziyun (Claude) Wang] 09:42:15
+So, here, um, something you need to understand, this is in, uh,
+
+[Ziyun (Claude) Wang] 09:42:22
+metric scale, right? So if we do Y divided Z times F, because F is actually in millimeters, right?
+
+[Ziyun (Claude) Wang] 09:42:29
+So this whole thing, if we compute Y, that's actually in meters, millimeters, or inches, right? That's in metric scale.
+
+[Ziyun (Claude) Wang] 09:42:37
+But for digital cameras, the pixel coordinates are actually
+
+[Ziyun (Claude) Wang] 09:42:41
+need to be mapped to pixels, right? How do we do that? We need to multiply this Y
+
+[Ziyun (Claude) Wang] 09:42:47
+by some sort of ratio, right? This ratio is defined by the number of pixels divided by the session size. This is, uh, just an intuition, right? Some people might ask,
+
+[Ziyun (Claude) Wang] 09:42:56
+Uh, we're going from this ratio multiplied by a symmetric scale numbers. Why do we get pixels?
+
+[Ziyun (Claude) Wang] 09:43:03
+We don't directly get pixels. We need to know, uh, sort of this ratio before we can,
+
+[Ziyun (Claude) Wang] 09:43:08
+Um, you know, actually compute the pixel coordinates of…
+
+[Ziyun (Claude) Wang] 09:43:12
+Uh, of this projection.
+
+[Ziyun (Claude) Wang] 09:43:15
+Right. And, uh, one last thing I want to mention is projective equivalence, right? This is…
+
+[Ziyun (Claude) Wang] 09:43:21
+very important in, uh, 3D computer vision is that
+
+[Ziyun (Claude) Wang] 09:43:25
+Any point along the ray,
+
+[Ziyun (Claude) Wang] 09:43:28
+Uh, from the camera center to an object point, right? Any point along the ray
+
+[Ziyun (Claude) Wang] 09:43:33
+Uh, we're projected to the same port, right?
+
+[Ziyun (Claude) Wang] 09:43:36
+Let's say in this case, we have an array from the camera center to X, right?
+
+[Ziyun (Claude) Wang] 09:43:42
+Any place along this rate, so on this rate, I live on this line,
+
+[Ziyun (Claude) Wang] 09:43:47
+They will project to the same X point.
+
+[Ziyun (Claude) Wang] 09:43:49
+What does this mean? This means there is some ambiguity.
+
+[Ziyun (Claude) Wang] 09:43:53
+When we observe a point in the 3D world,
+
+[Ziyun (Claude) Wang] 09:43:56
+Right? We basically cannot differentiate between two cases.
+
+[Ziyun (Claude) Wang] 09:44:00
+So the first one is we have a small object that's near
+
+[Ziyun (Claude) Wang] 09:44:03
+the camera. And we also, uh, we can also have a big object as far away from
+
+[Ziyun (Claude) Wang] 09:44:10
+the camera, right? We simply cannot differentiate between the two.
+
+[Ziyun (Claude) Wang] 09:44:14
+Uh, this is because…
+
+[Ziyun (Claude) Wang] 09:44:16
+If we scale X and Z,
+
+[Ziyun (Claude) Wang] 09:44:18
+by the same lambda, we actually end up with the same small X. So, for example, we…
+
+[Ziyun (Claude) Wang] 09:44:23
+Uh, from this equation, we have x equals F,
+
+[Ziyun (Claude) Wang] 09:44:27
+X divided by Z, and we multiply X and Z
+
+[Ziyun (Claude) Wang] 09:44:31
+by the same lambda, right? So that we end up with X prime and Z prime, and when we compute X prime again,
+
+[Ziyun (Claude) Wang] 09:44:38
+It's actually equal to the original X.
+
+[Ziyun (Claude) Wang] 09:44:41
+So there is a scale ambiguity.
+
+[Ziyun (Claude) Wang] 09:44:43
+So, what that means is, I don't know if you've done this before, it's like, if you cover your eyes, right, if you cover one of your eyes,
+
+[Ziyun (Claude) Wang] 09:44:50
+And then you look at, as the, um, the tip of a pencil, right? You're trying to touch the tip of your pencil. It actually becomes a lot harder.
+
+[Ziyun (Claude) Wang] 09:44:59
+Because actually, from a monocular view,
+
+[Ziyun (Claude) Wang] 09:45:01
+You don't get very good depth information, right? You only have, sort of, a perception of relative depth, but actually,
+
+[Ziyun (Claude) Wang] 09:45:10
+you have a scale ambiguity, right? You don't know how far the pencil is from you.
+
+[Ziyun (Claude) Wang] 09:45:15
+Because you only observe a single ray that corresponds to some point on the pencil,
+
+[Ziyun (Claude) Wang] 09:45:21
+And that can actually be
+
+[Ziyun (Claude) Wang] 09:45:23
+close to the camera, or far from the camera, right, depending on, you know, the size of the object, right? This is an important point you need to understand.
+
+[Ziyun (Claude) Wang] 09:45:32
+from a single-view camera, you actually don't estimate, uh, there is a scale ambiguity, you don't get the metric scale.
+
+[Ziyun (Claude) Wang] 09:45:40
+of your… of your depth, right? We'll come up, we'll… we'll run into this problem in
+
+[Ziyun (Claude) Wang] 09:45:45
+In later lectures,
+
+[Ziyun (Claude) Wang] 09:45:47
+Where we talk about monocular, uh,
+
+[Ziyun (Claude) Wang] 09:45:50
+you know, structure from motion, or SLAM, where the scale of the scene is actually not
+
+[Ziyun (Claude) Wang] 09:45:55
+retrievable from a single camera.
+
+[Ziyun (Claude) Wang] 09:45:59
+Um, so…
+
+[Ziyun (Claude) Wang] 09:46:01
+because we're running out of time, I think we'll stop here today. So, next lecture, we'll talk about, uh, you know, in this
+
+[Ziyun (Claude) Wang] 09:46:08
+And you… in the projective space, right, because when we talk about region transformations, they're all in the Euclidean space, right? But now, after we introduce
+
+[Ziyun (Claude) Wang] 09:46:17
+Uh, these projected transforms, actually, there are certain properties, uh, arithmetics we can do,
+
+[Ziyun (Claude) Wang] 09:46:23
+certain operations that we can do in this projective space that involves lines and points, and how we can actually
+
+[Ziyun (Claude) Wang] 09:46:29
+take these homogeneous coordinates and then compute the intersection between lines, and compute
+
+[Ziyun (Claude) Wang] 09:46:36
+lines by connecting two points in the projected space, and we can do a… we'll do a review,
+
+[Ziyun (Claude) Wang] 09:46:41
+And then we moved from Euclidean space to, um, the, uh, the projected space.
+
+[Ziyun (Claude) Wang] 09:46:46
+Right. Um…
+
+[Ziyun (Claude) Wang] 09:46:48
+Okay, so that's it for the lecture today. I guess for… in terms of logistics, I expect…
+
+[Ziyun (Claude) Wang] 09:46:56
+On Wednesday, we'll have still in-class lectures.
+
+[Ziyun (Claude) Wang] 09:46:59
+Um, because I don't see a lot of snow right now, and uh, I'll see you in person, and I hope everybody stays
+
+[Ziyun (Claude) Wang] 09:47:07
+Uh, warm and safe.
+
+[Ziyun (Claude) Wang] 09:47:09
+And, uh, thank you for attending this Zoom lecture.
+
+[Ziyun (Claude) Wang] 09:47:13
+Thanks.
+
+[Jarrod C] 09:47:17
+Uh, Professor, are you gonna stay back, or, uh, not today?
+
+[Ziyun (Claude) Wang] 09:47:21
+Uh, not today. On Wednesday, so my office hours will be on Wednesday, uh, but this week I won't have my office hours. But if you have any questions, you can make an appointment with me.
+
+[Ziyun (Claude) Wang] 09:47:29
+I can, uh, I can just have an office hour for you.
+
+[Jarrod C] 09:47:32
+I'm… did you say, um, not today, but on Wednesday? Is that what I heard?
+
+[Ziyun (Claude) Wang] 09:47:37
+So usually, generally, on regular weeks, it's not today on Wednesday, but this Wednesday, I won't have my, uh, office hours.
+
+[Ziyun (Claude) Wang] 09:47:45
+That's in the announcement. So I'll start my office hours next week, but if you want to meet, we can schedule a time this week.
+
+[Ziyun (Claude) Wang] 09:47:53
+Uh, to, uh, just have an office hour to answer questions.
+
+[Jarrod C] 09:47:57
+Okay, thank you
+
+[Ziyun (Claude) Wang] 09:48:00
+All right.
+
+[Ziyun (Claude) Wang] 09:48:02
+You're good to go.
+
