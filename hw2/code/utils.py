@@ -315,6 +315,10 @@ def update_optimizer_state(optimizer, new_params_dict, keep_mask=None, new_indic
         new_indices: (For densification) Indices of original points to clone/split.
     """
     
+    # Normalize mask/index to 1D for robust checks
+    keep_mask_1d = keep_mask.flatten() if keep_mask is not None else None
+    new_indices_1d = new_indices.flatten() if new_indices is not None else None
+
     # Iterate over ALL groups (xyz, opacity, features, etc.)
     for group in optimizer.param_groups:
         name = group.get("name", None)
@@ -326,36 +330,49 @@ def update_optimizer_state(optimizer, new_params_dict, keep_mask=None, new_indic
             
             # 1. Retrieve the existing optimizer state for this parameter
             # Use .get() to return None if state doesn't exist yet (e.g. iter 0)
-            state = optimizer.state.get(old_param, None)
+            state = optimizer.state.pop(old_param, None)
             
             if state is not None:
                 # 2. Modify the state (Momentum Buffers)
                 # We typically update 'exp_avg' and 'exp_avg_sq'
+                new_state = {}
                 for key in ['exp_avg', 'exp_avg_sq']:
                     if key in state:
-                        if keep_mask is not None:
+                        if keep_mask_1d is not None:
                             # --- PRUNING ---
-                            # keep_mask 必须与 old_param 同长；否则说明 optimizer 与 gaussians 已不同步，直接 reinit
-                            keep_mask_1d = keep_mask.flatten()
                             n_old = old_param.shape[0]
                             n_mask = keep_mask_1d.shape[0]
                             n_state = state[key].shape[0]
                             if n_mask == n_old == n_state:
-                                state[key] = state[key][keep_mask_1d]
+                                keep_idx = torch.nonzero(keep_mask_1d, as_tuple=False).squeeze(1)
+                                new_state[key] = state[key].index_select(0, keep_idx)
                             else:
-                                state[key] = torch.zeros_like(new_param, device=new_param.device)
+                                new_state[key] = torch.zeros_like(new_param, device=new_param.device)
                             
-                        elif new_indices is not None:
+                        elif new_indices_1d is not None:
                             # --- DENSIFICATION ---
                             # Concatenate the new momentum initialized from parents
-                            new_momentum = state[key][new_indices]
-                            state[key] = torch.cat([state[key], new_momentum], dim=0)
-
-                # 3. Clean up the old parameter key
-                del optimizer.state[old_param]
+                            n_old = old_param.shape[0]
+                            n_state = state[key].shape[0]
+                            idx_ok = (new_indices_1d.numel() == 0) or (
+                                int(new_indices_1d.min()) >= 0 and int(new_indices_1d.max()) < n_state
+                            )
+                            if n_old == n_state and idx_ok:
+                                new_momentum = state[key].index_select(0, new_indices_1d)
+                                new_state[key] = torch.cat([state[key], new_momentum], dim=0)
+                            else:
+                                new_state[key] = torch.zeros_like(new_param, device=new_param.device)
+                        else:
+                            # Other replacement path: keep state only if shape matches.
+                            if state[key].shape == new_param.shape:
+                                new_state[key] = state[key]
+                            else:
+                                new_state[key] = torch.zeros_like(new_param, device=new_param.device)
                 
                 # 4. Assign the MODIFIED state to the NEW parameter
-                optimizer.state[new_param] = state
+                if "step" in state:
+                    new_state["step"] = state["step"]
+                optimizer.state[new_param] = new_state
             
             else:
                 # If state was None (optimizer hasn't stepped yet), just initialize empty
