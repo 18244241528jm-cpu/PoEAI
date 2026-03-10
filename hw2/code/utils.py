@@ -336,13 +336,15 @@ def update_optimizer_state(optimizer, new_params_dict, keep_mask=None, new_indic
                         if keep_mask is not None:
                             # --- PRUNING ---
                             # Keep only the survivors
-                            keep_mask_1d = keep_mask.flatten()
-                            n_state = state[key].shape[0]
-                            n_mask = keep_mask_1d.shape[0]
-                            if n_mask == n_state:
-                                state[key] = state[key][keep_mask_1d]
-                            else:
-                                # Mismatch: reinit state to avoid IndexError (loses momentum briefly)
+                            try:
+                                keep_mask_1d = keep_mask.flatten()
+                                n_state = state[key].shape[0]
+                                n_mask = keep_mask_1d.shape[0]
+                                if n_mask == n_state:
+                                    state[key] = state[key][keep_mask_1d]
+                                else:
+                                    state[key] = torch.zeros_like(new_param, device=new_param.device)
+                            except IndexError:
                                 state[key] = torch.zeros_like(new_param, device=new_param.device)
                             
                         elif new_indices is not None:
