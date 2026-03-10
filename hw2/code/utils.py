@@ -336,19 +336,14 @@ def update_optimizer_state(optimizer, new_params_dict, keep_mask=None, new_indic
                         if keep_mask is not None:
                             # --- PRUNING ---
                             # Keep only the survivors
-                            # Ensure mask matches state (handle optimizer/gaussian count mismatch)
+                            keep_mask_1d = keep_mask.flatten()
                             n_state = state[key].shape[0]
-                            n_mask = keep_mask.shape[0]
+                            n_mask = keep_mask_1d.shape[0]
                             if n_mask == n_state:
-                                state[key] = state[key][keep_mask]
-                            elif n_mask < n_state:
-                                # State has more (e.g. from failed sync) - pad mask with False to prune extra
-                                keep_aligned = torch.zeros(n_state, dtype=torch.bool, device=keep_mask.device)
-                                keep_aligned[:n_mask] = keep_mask
-                                state[key] = state[key][keep_aligned]
+                                state[key] = state[key][keep_mask_1d]
                             else:
-                                # Mask has more - truncate
-                                state[key] = state[key][keep_mask[:n_state]]
+                                # Mismatch: reinit state to avoid IndexError (loses momentum briefly)
+                                state[key] = torch.zeros_like(new_param, device=new_param.device)
                             
                         elif new_indices is not None:
                             # --- DENSIFICATION ---
