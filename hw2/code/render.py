@@ -397,8 +397,9 @@ class Renderer():
         cat_colors = torch.cat([self.gaussians.colors, new_colors_c, new_colors_s])
 
         # Indices used to extend optimizer states
-        # Clones inherit from idx_clone. Splits inherit from idx_split (repeated).
-        new_indices = torch.cat([idx_clone, idx_split.repeat(2)])
+        # Must match exactly the number of actually added Gaussians.
+        # Here splits add one child per parent, so we use idx_split once.
+        new_indices = torch.cat([idx_clone, idx_split])
         
         # Update Gaussians Class
         self.gaussians.means = torch.nn.Parameter(cat_means)
