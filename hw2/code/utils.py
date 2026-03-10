@@ -335,16 +335,14 @@ def update_optimizer_state(optimizer, new_params_dict, keep_mask=None, new_indic
                     if key in state:
                         if keep_mask is not None:
                             # --- PRUNING ---
-                            # Keep only the survivors
-                            try:
-                                keep_mask_1d = keep_mask.flatten()
-                                n_state = state[key].shape[0]
-                                n_mask = keep_mask_1d.shape[0]
-                                if n_mask == n_state:
-                                    state[key] = state[key][keep_mask_1d]
-                                else:
-                                    state[key] = torch.zeros_like(new_param, device=new_param.device)
-                            except IndexError:
+                            # keep_mask 必须与 old_param 同长；否则说明 optimizer 与 gaussians 已不同步，直接 reinit
+                            keep_mask_1d = keep_mask.flatten()
+                            n_old = old_param.shape[0]
+                            n_mask = keep_mask_1d.shape[0]
+                            n_state = state[key].shape[0]
+                            if n_mask == n_old == n_state:
+                                state[key] = state[key][keep_mask_1d]
+                            else:
                                 state[key] = torch.zeros_like(new_param, device=new_param.device)
                             
                         elif new_indices is not None:
