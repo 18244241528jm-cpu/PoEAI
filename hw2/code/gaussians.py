@@ -205,7 +205,8 @@ class Gaussians:
         # Hint: use function 'quaternion_to_matrix' to get rotation matrix from quaternion
         ### YOUR CODE STARTS HERE ###
         R = quaternion_to_matrix(quats)
-        S_diag = torch.exp(scales)
+        # scales are already activated in render() via apply_activations
+        S_diag = scales
         if self.is_isotropic:
             S = S_diag.unsqueeze(-1) * torch.eye(3, device=scales.device).unsqueeze(0)
         else:
